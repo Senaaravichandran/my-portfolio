@@ -1,401 +1,462 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Senaaravichandran A - Portfolio Website | Information Technology Professional">
     <title>Senaaravichandran A - Portfolio</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-            transition: all 0.3s ease;
-        }
-        
-        body {
-            line-height: 1.6;
-            background: #f0f2f5;
-            color: #333;
-        }
-        
-        .container {
-            width: 85%;
-            max-width: 1200px;
-            margin: auto;
-            padding: 20px;
-        }
-        
-        header {
-            background: linear-gradient(135deg, #4285F4, #0F9D58);
-            color: white;
-            padding: 30px 0;
-            text-align: center;
-            border-radius: 0 0 20px 20px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-        }
-        
-        header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
-        
-        header p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-        }
-        
-        .profile-container {
-            position: relative;
-            width: 220px;
-            height: 220px;
-            margin: -110px auto 20px;
-        }
-        
-        .profile-circle {
-            width: 220px;
-            height: 220px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 5px solid white;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            position: relative;
-            z-index: 2;
-            transition: transform 0.5s;
-        }
-        
-        .profile-circle:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.25);
-        }
-        
-        .profile-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-        }
-        
-        .profile-glow {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: radial-gradient(circle, transparent 50%, rgba(66, 133, 244, 0.3) 100%);
-            z-index: 1;
-            animation: pulse 3s infinite;
-        }
-        
-        @keyframes pulse {
-            0% { transform: scale(0.95); opacity: 0.7; }
-            50% { transform: scale(1.05); opacity: 0.3; }
-            100% { transform: scale(0.95); opacity: 0.7; }
-        }
-        
-        section {
-            margin: 25px 0;
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            transform: translateY(0);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        
-        section:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-        }
-        
-        h2 {
-            color: #4285F4;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #f1f1f1;
-            font-size: 1.6rem;
-        }
-        
-        p {
-            margin-bottom: 15px;
-            font-size: 1rem;
-            line-height: 1.7;
-        }
-        
-        .hobby-list {
-            list-style: none;
-            padding: 0;
-        }
-        
-        .hobby-list li {
-            padding: 10px 15px;
-            margin-bottom: 10px;
-            background: #f9f9f9;
-            border-radius: 8px;
-            font-weight: 500;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            display: flex;
-            align-items: center;
-        }
-        
-        .hobby-list li:hover {
-            background: #f0f7ff;
-            transform: translateX(5px);
-        }
-        
-        .contact-info {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-        
-        .contact-item {
-            background: #f9f9f9;
-            padding: 15px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            flex: 1;
-            min-width: 250px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-        
-        .contact-item:hover {
-            background: #f0f7ff;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        
-        .contact-icon {
-            margin-right: 10px;
-            font-size: 1.2rem;
-            color: #4285F4;
-        }
-        
-        .skills-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 15px;
-        }
-        
-        .skill-tag {
-            background: #e8f0fe;
-            color: #4285F4;
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-        
-        .skill-tag:hover {
-            background: #4285F4;
-            color: white;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(66, 133, 244, 0.3);
-        }
-        
-        footer {
-            background: #333;
-            color: white;
-            text-align: center;
-            padding: 20px;
-            margin-top: 30px;
-            border-radius: 20px 20px 0 0;
-        }
-        
-        .social-icons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 15px;
-        }
-        
-        .social-icon {
-            background: rgba(255,255,255,0.1);
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            color: white;
-            font-size: 1.2rem;
-            transition: all 0.3s;
-        }
-        
-        .social-icon:hover {
-            background: white;
-            color: #333;
-            transform: translateY(-5px);
-        }
-        
-        /* Animation for page load */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        header, section, footer {
-            animation: fadeIn 0.8s ease-out forwards;
-        }
-        
-        section:nth-child(1) { animation-delay: 0.3s; }
-        section:nth-child(2) { animation-delay: 0.5s; }
-        section:nth-child(3) { animation-delay: 0.7s; }
-        section:nth-child(4) { animation-delay: 0.9s; }
-        footer { animation-delay: 1.1s; }
-        
-        /* Add responsiveness */
-        @media (max-width: 768px) {
-            .container {
-                width: 95%;
-            }
-            
-            header h1 {
-                font-size: 2rem;
-            }
-            
-            .profile-container {
-                width: 180px;
-                height: 180px;
-                margin: -90px auto 20px;
-            }
-            
-            .profile-circle {
-                width: 180px;
-                height: 180px;
-            }
-        }
-    </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Our own CSS file -->
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1>Senaaravichandran A</h1>
-            <p>IT Student & Tech Enthusiast</p>
-        </div>
-    </header>
-
-    <div class="container">
-        <div class="profile-container">
-            <div class="profile-circle">
-                <img src="profile.jpg" alt="Senaaravichandran A" class="profile-image">
-            </div>
-            <div class="profile-glow"></div>
-        </div>
-        
-        <section>
-            <h2><i class="fas fa-user"></i> About Me</h2>
-            <p>Hi! I'm Senaaravichandran A, an enthusiastic and driven Information Technology student at Sri Manakula Vinayagar Engineering College. I'm passionate about exploring cutting-edge technologies like Artificial Intelligence, Machine Learning, Data Science, and Web Development.</p>
-            
-            <p>I've worked on multiple remote internships in AI, Data Analytics, and Prompt Engineering, where I contributed to real-world projects involving data visualization, AI model development, and digital strategies. I'm skilled in Python, HTML, CSS, and have hands-on experience with frameworks like MERN and tools like Streamlit and Firebase.</p>
-            
-            <p>Aside from tech, I enjoy playing chess and watching sci-fi movies. I love collaborating with others and learning new things every day — especially through hackathons, workshops, and online masterclasses. My goal is to keep building and learning, one project at a time!</p>
-            
-            <h3 style="margin-top: 20px; color: #4285F4;">Skills</h3>
-            <div class="skills-container">
-                <span class="skill-tag">Python</span>
-                <span class="skill-tag">HTML/CSS</span>
-                <span class="skill-tag">MERN Stack</span>
-                <span class="skill-tag">Data Science</span>
-                <span class="skill-tag">Machine Learning</span>
-                <span class="skill-tag">AI</span>
-                <span class="skill-tag">Streamlit</span>
-                <span class="skill-tag">Firebase</span>
-            </div>
-        </section>
-        
-        <section>
-            <h2><i class="fas fa-laptop-code"></i> Projects</h2>
-            <div class="project-card">
-                <h3>AI-Powered Web Application</h3>
-                <p>Created a web application using Python and Streamlit that leverages AI to provide personalized recommendations.</p>
-            </div>
-            
-            <div class="project-card">
-                <h3>Data Visualization Dashboard</h3>
-                <p>Developed an interactive dashboard for visualizing complex datasets using modern web technologies.</p>
-            </div>
-        </section>
-        
-        <section>
-            <h2><i class="fas fa-heart"></i> My Hobbies</h2>
-            <ul class="hobby-list">
-                <li><i class="fas fa-chess-knight" style="margin-right: 10px; color: #4285F4;"></i> Playing Chess ♟️</li>
-                <li><i class="fas fa-film" style="margin-right: 10px; color: #4285F4;"></i> Watching Sci-Fi Movies 🎬</li>
-                <li><i class="fas fa-lightbulb" style="margin-right: 10px; color: #4285F4;"></i> Participating in Hackathons 💡</li>
-            </ul>
-        </section>
-        
-        <section>
-            <h2><i class="fas fa-envelope"></i> Contact Me</h2>
-            <div class="contact-info">
-                <div class="contact-item">
-                    <i class="fas fa-envelope contact-icon"></i>
-                    <div>senaaravichandran@gmail.com</div>
-                </div>
-                <div class="contact-item">
-                    <i class="fas fa-phone contact-icon"></i>
-                    <div>+91 7418887124</div>
-                </div>
-                <div class="contact-item">
-                    <i class="fas fa-map-marker-alt contact-icon"></i>
-                    <div>Sri Manakula Vinayagar Engineering College</div>
-                </div>
-            </div>
-        </section>
+    <!-- Loading Animation -->
+    <div class="loader-wrapper">
+        <div class="loader"></div>
     </div>
 
+    <!-- Header/Navigation -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">Senaa</div>
+            <div class="theme-toggle">
+                <input type="checkbox" id="theme-toggle-checkbox">
+                <label for="theme-toggle-checkbox" class="theme-toggle-label">
+                    <i class="fas fa-sun"></i>
+                    <i class="fas fa-moon"></i>
+                    <div class="ball"></div>
+                </label>
+            </div>
+            <div class="menu-toggle">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Home Section -->
+        <section id="home" class="home-section">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="animate-text">Hi, I'm <span class="highlight">Senaaravichandran A</span></h1>
+                    <p class="lead animate-text delay-1">Information Technology Student & AI Enthusiast</p>
+                    <div class="cta-buttons animate-text delay-2">
+                        <a href="#contact" class="btn primary-btn">Contact Me</a>
+                        <a href="My Resume.pdf" download class="btn secondary-btn">Download CV</a>
+                    </div>
+                    <div class="social-icons animate-text delay-3">
+                        <a href="https://www.linkedin.com/in/senaa2402" target="_blank" aria-label="LinkedIn Profile"><i class="fab fa-linkedin"></i></a>
+                        <a href="mailto:senaaravichandran@gmail.com" aria-label="Email Me"><i class="far fa-envelope"></i></a>
+                        <a href="https://github.com" target="_blank" aria-label="GitHub Profile"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="about-section">
+            <div class="container">
+                <h2 class="section-title">About Me</h2>
+                <div class="about-content">
+                    <div class="about-text">
+                        <p>A driven and collaborative professional, I bring a strong work ethic and proactive learning approach to every endeavor. My adaptable leadership style fosters growth, while my results-oriented mindset ensures effective problem-solving and communication. I am passionate about contributing to organizational success through both teamwork and individual initiative.</p>
+                        <div class="personal-info">
+                            <div class="info-item">
+                                <strong>Name:</strong> Senaaravichandran A
+                            </div>
+                            <div class="info-item">
+                                <strong>Education:</strong> B.Tech, Information Technology (2023-2027)
+                            </div>
+                            <div class="info-item">
+                                <strong>CGPA:</strong> 7.91
+                            </div>
+                            <div class="info-item">
+                                <strong>College:</strong> Sri Manakula Vinayagar Engineering College, Puducherry
+                            </div>
+                            <div class="info-item">
+                                <strong>Email:</strong> senaaravichandran@gmail.com
+                            </div>
+                            <div class="info-item">
+                                <strong>Phone:</strong> +91 7418887124
+                            </div>
+                            <div class="info-item">
+                                <strong>Languages:</strong> Tamil (Native), English (Proficient)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="skills-section">
+            <div class="container">
+                <h2 class="section-title">My Skills</h2>
+                <div class="skills-categories">
+                    <div class="skills-category">
+                        <h3>Technical Skills</h3>
+                        <div class="skills-grid">
+                            <div class="skill-card">
+                                <div class="skill-icon"><i class="fas fa-code"></i></div>
+                                <h4>Programming Languages</h4>
+                                <p>Python, C, HTML, CSS</p>
+                            </div>
+                            <div class="skill-card">
+                                <div class="skill-icon"><i class="fas fa-laptop-code"></i></div>
+                                <h4>Other Languages</h4>
+                                <p>Basics of Java, Javascript, C#</p>
+                            </div>
+                            <div class="skill-card">
+                                <div class="skill-icon"><i class="fas fa-brain"></i></div>
+                                <h4>AI & ML</h4>
+                                <p>Artificial Intelligence and Machine Learning</p>
+                            </div>
+                            <div class="skill-card">
+                                <div class="skill-icon"><i class="fas fa-cloud"></i></div>
+                                <h4>Cloud Computing</h4>
+                                <p>Well-versed to work on Cloud Platforms</p>
+                            </div>
+                            <div class="skill-card">
+                                <div class="skill-icon"><i class="fas fa-cubes"></i></div>
+                                <h4>Frameworks</h4>
+                                <p>Experienced in Frameworks and Libraries in Python</p>
+                            </div>
+                            <div class="skill-card">
+                                <div class="skill-icon"><i class="fas fa-database"></i></div>
+                                <h4>Data Science</h4>
+                                <p>Competent in Data Science and Data Analyzing</p>
+                            </div>
+                            <div class="skill-card">
+                                <div class="skill-icon"><i class="fas fa-globe"></i></div>
+                                <h4>Web Development</h4>
+                                <p>Capable of Web Development, Blockchain and Full Stack Development</p>
+                            </div>
+                            <div class="skill-card">
+                                <div class="skill-icon"><i class="fas fa-gamepad"></i></div>
+                                <h4>Development</h4>
+                                <p>Seasoned in MERN Stack, Game Development and App Development</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="skills-category">
+                        <h3>Soft Skills</h3>
+                        <div class="skills-grid">
+                            <div class="skill-card">
+                                <div class="skill-icon"><i class="fas fa-users"></i></div>
+                                <h4>Leadership</h4>
+                                <p>Leadership and Engaging Speaker</p>
+                            </div>
+                            <div class="skill-card">
+                                <div class="skill-icon"><i class="fas fa-clock"></i></div>
+                                <h4>Time Management</h4>
+                                <p>Effective time management skills</p>
+                            </div>
+                            <div class="skill-card">
+                                <div class="skill-icon"><i class="fas fa-handshake"></i></div>
+                                <h4>Collaboration</h4>
+                                <p>Collaborative Learner</p>
+                            </div>
+                            <div class="skill-card">
+                                <div class="skill-icon"><i class="fas fa-lightbulb"></i></div>
+                                <h4>Learning</h4>
+                                <p>Enthusiastic Learner</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section id="experience" class="experience-section">
+            <div class="container">
+                <h2 class="section-title">Experience</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">09/2024 - 10/2024</div>
+                        <div class="timeline-content">
+                            <h3>Generative AI Intern</h3>
+                            <p class="company">Flaunch (Remote)</p>
+                            <p>Contributed to building LLAMA models.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">12/2024 - 01/2025</div>
+                        <div class="timeline-content">
+                            <h3>AI Powered Data Analysis Intern</h3>
+                            <p class="company">Excelerate (Remote)</p>
+                            <p>Focused on Data Analysing using AI.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">10/2024 - 12/2024</div>
+                        <div class="timeline-content">
+                            <h3>Data Analytics Intern</h3>
+                            <p class="company">NoviTech R&D Private Limited (Remote)</p>
+                            <p>Contributed to data cleaning, processing, and visualization projects.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">10/2024 - 12/2024</div>
+                        <div class="timeline-content">
+                            <h3>Artificial Intelligence Intern</h3>
+                            <p class="company">NoviTech R&D Private Limited (Remote)</p>
+                            <p>Contributed to AI research and development projects.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">10/2024 - 11/2024</div>
+                        <div class="timeline-content">
+                            <h3>Artificial Intelligence Intern</h3>
+                            <p class="company">Excelerate (Remote)</p>
+                            <p>Focused on AI Models and Developments.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">01/2025 - 02/2025</div>
+                        <div class="timeline-content">
+                            <h3>Innovation and Entrepreneurship Intern</h3>
+                            <p class="company">Excelerate (Remote)</p>
+                            <p>Contributed to the development of innovative strategies and entrepreneurial initiatives.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">01/2025 - 02/2025</div>
+                        <div class="timeline-content">
+                            <h3>Prompt Engineering Intern</h3>
+                            <p class="company">Excelerate (Remote)</p>
+                            <p>Contributed to research and development efforts in prompt engineering methodologies.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">02/2025 - 03/2025</div>
+                        <div class="timeline-content">
+                            <h3>Digital Strategy Intern</h3>
+                            <p class="company">Excelerate (Remote)</p>
+                            <p>Supported the implementation of digital strategy initiatives and contributed to project execution.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="see-more-btn">
+                    <button id="see-more-exp" class="btn secondary-btn">See More</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="projects-section">
+            <div class="container">
+                <h2 class="section-title">Projects</h2>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <div class="project-image">
+                            <i class="fas fa-robot project-icon"></i>
+                        </div>
+                        <div class="project-details">
+                            <h3>AI STEM Problem Solver</h3>
+                            <p>Leveraging LLMA for creative writing to solve STEM problems through innovative approaches.</p>
+                            <div class="project-tags">
+                                <span>AI</span>
+                                <span>LLMA</span>
+                                <span>STEM</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> View Project</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-image">
+                            <i class="fas fa-volume-up project-icon"></i>
+                        </div>
+                        <div class="project-details">
+                            <h3>AI Noise Reduction System using ML</h3>
+                            <p>AI noise reduction systems use machine learning to identify and remove unwanted noise from audio or visual data, enhancing signal clarity.</p>
+                            <div class="project-tags">
+                                <span>AI</span>
+                                <span>ML</span>
+                                <span>Audio Processing</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> View Project</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-image">
+                            <i class="fas fa-chart-line project-icon"></i>
+                        </div>
+                        <div class="project-details">
+                            <h3>XGBoost-Powered Sales Prediction App</h3>
+                            <p>A Streamlit app using XGBoost was developed to accurately predict daily sales of construction machinery via comprehensive data processing and model optimization.</p>
+                            <div class="project-tags">
+                                <span>XGBoost</span>
+                                <span>Streamlit</span>
+                                <span>ML</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> View Project</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-image">
+                            <i class="fas fa-briefcase project-icon"></i>
+                        </div>
+                        <div class="project-details">
+                            <h3>AI-Powered Career Path Recommendation Application</h3>
+                            <p>An AI-driven application was created to provide tailored career guidance using voice conversion and file uploads for user input.</p>
+                            <div class="project-tags">
+                                <span>AI</span>
+                                <span>Career Development</span>
+                                <span>Voice Processing</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> View Project</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="see-more-btn">
+                    <button id="see-more-projects" class="btn secondary-btn">See More Projects</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Certifications Section -->
+        <section id="certifications" class="certifications-section">
+            <div class="container">
+                <h2 class="section-title">Certifications & Achievements</h2>
+                <div class="cert-carousel">
+                    <div class="cert-item">
+                        <div class="cert-icon"><i class="fas fa-certificate"></i></div>
+                        <h3>Data Science Analytics Workshop</h3>
+                    </div>
+                    <div class="cert-item">
+                        <div class="cert-icon"><i class="fas fa-certificate"></i></div>
+                        <h3>Freedom With AI Masterclass</h3>
+                    </div>
+                    <div class="cert-item">
+                        <div class="cert-icon"><i class="fas fa-certificate"></i></div>
+                        <h3>Build your own Ticketing App in a Week</h3>
+                    </div>
+                    <div class="cert-item">
+                        <div class="cert-icon"><i class="fas fa-certificate"></i></div>
+                        <h3>Coordinator in HACK$ DAY</h3>
+                    </div>
+                    <div class="cert-item">
+                        <div class="cert-icon"><i class="fas fa-certificate"></i></div>
+                        <h3>Data Analytics and Visualization Job Simulation</h3>
+                    </div>
+                    <div class="cert-item">
+                        <div class="cert-icon"><i class="fas fa-certificate"></i></div>
+                        <h3>AI Workplace Proficiency</h3>
+                    </div>
+                </div>
+                <div class="see-more-btn">
+                    <button id="see-more-certifications" class="btn secondary-btn">See More Certifications</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact-section">
+            <div class="container">
+                <h2 class="section-title">Get in Touch</h2>
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <h3>Email</h3>
+                            <p><a href="mailto:senaaravichandran@gmail.com">senaaravichandran@gmail.com</a></p>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone-alt"></i>
+                            <h3>Phone</h3>
+                            <p><a href="tel:+917418887124">+91 7418887124</a></p>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fab fa-linkedin"></i>
+                            <h3>LinkedIn</h3>
+                            <p><a href="https://www.linkedin.com/in/senaa2402" target="_blank">linkedin.com/in/senaa2402</a></p>
+                        </div>
+                    </div>
+                    <div class="contact-form">
+                        <form id="contactForm">
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" id="name" name="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="subject">Subject</label>
+                                <input type="text" id="subject" name="subject" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Message</label>
+                                <textarea id="message" name="message" rows="5" required></textarea>
+                            </div>
+                            <button type="submit" class="btn primary-btn">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
     <footer>
         <div class="container">
-            <p>&copy; 2025 Senaaravichandran A - Portfolio</p>
-            <div class="social-icons">
-                <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
-                <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
-                <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
-                <a href="#" class="social-icon"><i class="fas fa-envelope"></i></a>
+            <div class="footer-content">
+                <div class="footer-logo">Senaa</div>
+                <div class="footer-social">
+                    <a href="https://www.linkedin.com/in/senaa2402" target="_blank" aria-label="LinkedIn Profile"><i class="fab fa-linkedin"></i></a>
+                    <a href="mailto:senaaravichandran@gmail.com" aria-label="Email Me"><i class="far fa-envelope"></i></a>
+                    <a href="https://github.com" target="_blank" aria-label="GitHub Profile"><i class="fab fa-github"></i></a>
+                </div>
+                <div class="footer-nav">
+                    <a href="#home">Home</a>
+                    <a href="#about">About</a>
+                    <a href="#skills">Skills</a>
+                    <a href="#projects">Projects</a>
+                    <a href="#contact">Contact</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Senaaravichandran A. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
-    <script>
-        // Add some interactive elements
-        document.addEventListener('DOMContentLoaded', function() {
-            // Add smooth scrolling for better experience
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    document.querySelector(this.getAttribute('href')).scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                });
-            });
-            
-            // Make hobby items interactive
-            const hobbyItems = document.querySelectorAll('.hobby-list li');
-            hobbyItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    this.style.transform = 'translateX(10px)';
-                    setTimeout(() => {
-                        this.style.transform = 'translateX(5px)';
-                    }, 300);
-                });
-            });
-            
-            // Add a subtle animation to the profile picture on mouse hover
-            const profileImage = document.querySelector('.profile-circle');
-            profileImage.addEventListener('mouseover', function() {
-                this.style.transform = 'scale(1.05) rotate(3deg)';
-            });
-            profileImage.addEventListener('mouseout', function() {
-                this.style.transform = 'scale(1)';
-            });
-        });
-    </script>
+    <!-- Back to top button -->
+    <button id="back-to-top" aria-label="Back to top"><i class="fas fa-arrow-up"></i></button>
+
+    <!-- Our own JavaScript file -->
+    <script src="script.js"></script>
 </body>
 </html>
