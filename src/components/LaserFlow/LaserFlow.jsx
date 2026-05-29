@@ -258,7 +258,7 @@ export const LaserFlow = ({
   decay = 1.1,
   falloffStart = 1.2,
   fogFallSpeed = 0.6,
-  color = '#FF79C6'
+  color = '#6EEBFF'
 }) => {
   const mountRef = useRef(null);
   const rendererRef = useRef(null);
@@ -319,6 +319,7 @@ export const LaserFlow = ({
 
     const geometry = new THREE.BufferGeometry();
     geometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array([-1, -1, 0, 3, -1, 0, -1, 3, 0]), 3));
+    const initialColor = hexToRGB(color || '#FFFFFF');
 
     const uniforms = {
       iTime: { value: 0 },
@@ -341,7 +342,7 @@ export const LaserFlow = ({
       uDecay: { value: decay },
       uFalloffStart: { value: falloffStart },
       uFogFallSpeed: { value: fogFallSpeed },
-      uColor: { value: new THREE.Vector3(1, 1, 1) },
+      uColor: { value: new THREE.Vector3(initialColor.r, initialColor.g, initialColor.b) },
       uFade: { value: hasFadedRef.current ? 1 : 0 }
     };
     uniformsRef.current = uniforms;

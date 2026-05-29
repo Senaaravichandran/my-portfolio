@@ -9,8 +9,8 @@
 }
 
 .quote-proximity {
-  font-family: 'Cormorant Garamond', serif;
-  font-style: italic;
+  font-family: 'Times New Roman', Times, serif;
+  font-style: normal;
   font-size: clamp(1.15rem, 1.8vw, 1.4rem);
   color: rgba(255, 255, 255, 0.88);
   line-height: 2.2;

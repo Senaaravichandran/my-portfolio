@@ -3,8 +3,13 @@
   height: clamp(360px, 48vh, 500px);
   position: relative;
   overflow: hidden;
-  background: linear-gradient(180deg, #050816 0%, #0b1020 100%);
-  isolation: isolate;
+  background: transparent;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.abyss-flow-stage.is-visible {
+  opacity: 1;
 }
 
 .landing-content-panel {
@@ -19,16 +24,31 @@
 }
 
 .landing-quote-wrap .quote-proximity {
+  margin: 0;
   max-width: 480px;
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Times New Roman', Times, serif;
   font-size: clamp(1.5rem, 2.2vw, 1.85rem);
-  font-style: italic;
+  font-style: normal;
   font-weight: 400;
   line-height: 2;
   letter-spacing: 0;
   color: rgba(255, 255, 255, 0.88);
   text-align: left;
   text-wrap: balance;
+}
+
+.landing-quote-wrap .quote-author {
+  margin-top: 0.35rem;
+  margin-bottom: 0;
+  max-width: 480px;
+  font-family: 'Kidszone', 'Comic Sans MS', cursive;
+  font-size: clamp(1.25rem, 1.8vw, 1.55rem);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: 0;
+  color: rgba(255, 255, 255, 0.82);
+  text-align: left;
 }
 
 .abyss-flow-stage .laser-flow-container {
@@ -39,41 +59,17 @@
 
 .abyss-laser-wrap {
   position: absolute;
-  top: calc(var(--abyss-impact-y) - 260px);
-  left: calc(var(--abyss-impact-x) - 192px);
-  width: 320px;
-  height: 520px;
+  top: calc(var(--abyss-impact-y) - 310px);
+  left: calc(var(--abyss-impact-x) - 230px);
+  width: 420px;
+  height: 620px;
   overflow: hidden;
   pointer-events: none;
   mix-blend-mode: screen;
-  filter: saturate(1.18) brightness(1.06);
   transform: translateZ(0);
   z-index: 1;
-  animation: abyssBeamPulse 5.6s ease-in-out infinite;
-  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 9%, #000 calc(100% - 18px), transparent 100%);
-  mask-image: linear-gradient(180deg, transparent 0%, #000 9%, #000 calc(100% - 18px), transparent 100%);
-}
-
-.abyss-laser-wrap::before {
-  content: '';
-  position: absolute;
-  left: calc(50% + 32px);
-  top: -140vh;
-  width: 10px;
-  height: calc(140vh + 260px);
-  transform: translate3d(-50%, 0, 0);
-  border-radius: 999px;
-  background:
-    linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.72) 48%, rgba(125, 249, 255, 0.92) 50%, transparent),
-    linear-gradient(180deg, transparent 0%, rgba(110, 235, 255, 0.42) 58%, rgba(110, 235, 255, 0.82) 100%);
-  box-shadow:
-    0 0 16px rgba(110, 235, 255, 0.62),
-    0 0 44px rgba(110, 235, 255, 0.34),
-    0 0 86px rgba(110, 235, 255, 0.16);
-  filter: blur(3px);
-  opacity: 0.72;
-  mix-blend-mode: screen;
-  animation: abyssColumnFlicker 3.8s ease-in-out infinite;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 5%, #000 calc(100% - 18px), transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0%, #000 5%, #000 calc(100% - 18px), transparent 100%);
 }
 
 .abyss-laser-flow {
@@ -81,7 +77,6 @@
 }
 
 .abyss-laser-flow canvas {
-  filter: saturate(1.3) brightness(1.12);
   mix-blend-mode: screen;
 }
 
@@ -98,12 +93,13 @@
   justify-content: center;
   overflow: hidden;
   cursor: pointer;
+  pointer-events: auto;
   border: 2px solid rgba(110, 235, 255, 0.9);
   border-radius: 20px;
-  background-color: rgba(5, 8, 22, 0.9);
+  background-color: #050816;
   background-image:
     radial-gradient(circle, rgba(125, 249, 255, 0.2) 1px, transparent 1.2px),
-    linear-gradient(180deg, rgba(11, 16, 32, 0.94), rgba(5, 8, 22, 0.96));
+    linear-gradient(180deg, #0b1020, #050816);
   background-size: 25px 25px;
   box-shadow:
     0 0 28px rgba(110, 235, 255, 0.42),
@@ -111,34 +107,6 @@
     inset 0 0 22px rgba(110, 235, 255, 0.18),
     inset 0 1px 18px rgba(125, 249, 255, 0.12);
   z-index: 6;
-}
-
-.abyss-entry-box::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(ellipse at 50% 0%, rgba(125, 249, 255, 0.34), rgba(110, 235, 255, 0.16) 38%, transparent 72%),
-    radial-gradient(ellipse at 50% 52%, rgba(110, 235, 255, 0.14), transparent 56%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 26%);
-  mix-blend-mode: screen;
-}
-
-.abyss-entry-box::after {
-  content: '';
-  position: absolute;
-  top: -22px;
-  left: 50%;
-  width: 88%;
-  height: 72px;
-  transform: translateX(-50%);
-  pointer-events: none;
-  background:
-    radial-gradient(ellipse at top center, rgba(255, 255, 255, 0.3) 0 4%, rgba(125, 249, 255, 0.28) 18%, rgba(110, 235, 255, 0.16) 48%, transparent 78%);
-  filter: blur(16px);
-  opacity: 0.7;
-  mix-blend-mode: screen;
 }
 
 .abyss-entry-box .true-focus {
@@ -149,27 +117,6 @@
 .abyss-entry-box:focus-visible {
   outline: 2px solid rgba(255, 255, 255, 0.85);
   outline-offset: 4px;
-}
-
-@keyframes abyssBeamPulse {
-  0%, 100% {
-    opacity: 0.88;
-    transform: translate3d(0, 0, 0) scaleX(1);
-  }
-  35% {
-    opacity: 1;
-    transform: translate3d(0, 0, 0) scaleX(1.018);
-  }
-  64% {
-    opacity: 0.78;
-    transform: translate3d(0, 0, 0) scaleX(0.986);
-  }
-}
-
-@keyframes abyssColumnFlicker {
-  0%, 100% { opacity: 0.62; filter: blur(3px) brightness(1); }
-  45% { opacity: 0.78; filter: blur(3.5px) brightness(1.12); }
-  70% { opacity: 0.58; filter: blur(3px) brightness(0.96); }
 }
 
 @media (max-width: 760px) {
@@ -214,7 +161,7 @@
   }
 
   .abyss-laser-wrap {
-    left: calc(50% - 192px);
+    left: calc(50% - 230px);
   }
 
 }

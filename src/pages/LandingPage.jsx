@@ -1,114 +1,17 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion } from 'motion/react';
 import LaserFlow from '../components/LaserFlow/LaserFlow';
 import TrueFocus from '../components/TrueFocus/TrueFocus';
 import BlurText from '../components/BlurText/BlurText';
+import ShapeGrid from '../components/ShapeGrid/ShapeGrid';
 import './LandingPage.css';
-
-function ShapeGrid({
-  speed = 0.5,
-  squareSize = 40,
-  direction = 'diagonal',
-  borderColor = '#2F293A',
-  hoverFillColor = '#222',
-  shape = 'square',
-  hoverTrailAmount = 0,
-  hoverColor,
-  size,
-}) {
-  const cellSize = size || squareSize;
-  const [hovered, setHovered] = useState(null);
-  const cells = useMemo(() => Array.from({ length: 520 }, (_, index) => index), []);
-
-  const movement = {
-    up: { x: [0, 0], y: [0, -cellSize] },
-    down: { x: [0, 0], y: [0, cellSize] },
-    left: { x: [0, -cellSize], y: [0, 0] },
-    right: { x: [0, cellSize], y: [0, 0] },
-    diagonal: { x: [0, -cellSize], y: [0, -cellSize] },
-  }[direction] || { x: [0, -cellSize], y: [0, -cellSize] };
-
-  const shapeRadius = {
-    square: '0px',
-    circle: '999px',
-    hexagon: '8px',
-    triangle: '0px',
-  }[shape] || '0px';
-
-  return (
-    <div
-      aria-hidden="true"
-      style={{
-        position: 'absolute',
-        inset: 0,
-        overflow: 'hidden',
-        background: 'linear-gradient(145deg, #050816 0%, #070B16 46%, #0B1020 100%)',
-        pointerEvents: 'auto',
-        zIndex: 0,
-      }}
-    >
-      <motion.div
-        animate={movement}
-        transition={{
-          duration: Math.max(3, 8 / Math.max(speed, 0.1)),
-          ease: 'linear',
-          repeat: Infinity,
-        }}
-        style={{
-          position: 'absolute',
-          inset: `-${cellSize}px`,
-          display: 'grid',
-          gridTemplateColumns: `repeat(auto-fill, minmax(${cellSize}px, ${cellSize}px))`,
-          gridAutoRows: `${cellSize}px`,
-          width: `calc(100% + ${cellSize * 2}px)`,
-          height: `calc(100% + ${cellSize * 2}px)`,
-          opacity: 0.34,
-        }}
-      >
-        {cells.map(index => {
-          const active =
-            hovered === index ||
-            (hoverTrailAmount > 0 && hovered !== null && index < hovered && index >= hovered - hoverTrailAmount);
-
-          return (
-            <div
-              key={index}
-              onMouseEnter={() => setHovered(index)}
-              onMouseLeave={() => setHovered(null)}
-              style={{
-                width: cellSize,
-                height: cellSize,
-                border: `1px solid ${borderColor}`,
-                borderRadius: shapeRadius,
-                backgroundColor: active ? hoverColor || hoverFillColor : 'transparent',
-                clipPath: shape === 'triangle' ? 'polygon(50% 8%, 0 100%, 100% 100%)' : 'none',
-                transition: 'background-color 180ms ease, border-color 180ms ease',
-              }}
-            />
-          );
-        })}
-      </motion.div>
-    </div>
-  );
-}
 
 export default function LandingPage() {
   const [leaving, setLeaving] = useState(false);
-  const [quoteComplete, setQuoteComplete] = useState(false);
+  const [quoteLineComplete, setQuoteLineComplete] = useState(false);
   const [showAbyss, setShowAbyss] = useState(false);
   const navigate = useNavigate();
   const quoteRef = useRef(null);
-
-  useEffect(() => {
-    if (!quoteComplete) return undefined;
-
-    const timer = setTimeout(() => {
-      setShowAbyss(true);
-    }, 1000);
-
-    return () => clearTimeout(timer);
-  }, [quoteComplete]);
 
   const handleEnter = () => {
     setLeaving(true);
@@ -195,12 +98,10 @@ export default function LandingPage() {
           speed={0.5}
           squareSize={40}
           direction="diagonal"
-          borderColor="#13233A"
+          borderColor="#1A3550"
           hoverFillColor="#0B1830"
           shape="square"
           hoverTrailAmount={0}
-          hoverColor="#0E2238"
-          size={40}
         />
         
         {/* ELEMENT 1: QUOTE */}
@@ -219,16 +120,34 @@ export default function LandingPage() {
           }}
         >
           <BlurText
-            text="Every civilization looked up and called it destiny. We looked closer and called it engineering — Senaa"
+            text={'"Every civilization looked up and called it destiny. We looked closer and called it engineering"'}
             className="quote-proximity"
-            delay={200}
+            delay={140}
             animateBy="words"
             direction="top"
             threshold={0.1}
             rootMargin="0px"
             stepDuration={0.35}
-            onAnimationComplete={() => setQuoteComplete(true)}
+            animationFrom={{ filter: 'blur(10px)', opacity: 0, y: 0 }}
+            animationTo={[
+              { filter: 'blur(5px)', opacity: 0.5, y: 0 },
+              { filter: 'blur(0px)', opacity: 1, y: 0 }
+            ]}
+            onAnimationComplete={() => setQuoteLineComplete(true)}
           />
+          {quoteLineComplete && (
+            <BlurText
+              text=" - Senaa"
+              className="quote-author"
+              delay={120}
+              animateBy="words"
+              direction="top"
+              threshold={0.1}
+              rootMargin="0px"
+              stepDuration={0.35}
+              onAnimationComplete={() => setShowAbyss(true)}
+            />
+          )}
         </div>
 
         {/* ELEMENT 2: DECORATIVE DIVIDER */}
@@ -241,43 +160,43 @@ export default function LandingPage() {
         </div>
 
         {/* ELEMENT 3: CTA BUTTON */}
-        {showAbyss && (
-          <div
-            className="abyss-flow-stage"
-            style={{
-              '--abyss-impact-x': 'calc(100% - 190px)',
-              '--abyss-impact-y': 'calc(100% - 105px)',
-              height: '100vh',
-              width: '100%',
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              overflow: 'hidden',
-              backgroundColor: 'transparent',
-              zIndex: 2,
-            }}
-          >
-            <div className="abyss-laser-wrap" aria-hidden="true">
-              <LaserFlow
-                className="abyss-laser-flow"
-                color="#6EEBFF"
-                horizontalBeamOffset={0.1}
-                verticalBeamOffset={0.0}
-                horizontalSizing={0.5}
-                verticalSizing={2}
-                wispDensity={1}
-                wispSpeed={15}
-                wispIntensity={5}
-                flowSpeed={0.35}
-                flowStrength={0.25}
-                fogIntensity={0.45}
-                fogScale={0.3}
-                fogFallSpeed={0.6}
-                decay={1.1}
-                falloffStart={1.2}
-              />
-            </div>
+        <div
+          className={`abyss-flow-stage ${showAbyss ? 'is-visible' : ''}`}
+          style={{
+            '--abyss-impact-x': 'calc(100% - 190px)',
+            '--abyss-impact-y': 'calc(100% - 105px)',
+            height: '100vh',
+            width: '100%',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            overflow: 'hidden',
+            backgroundColor: 'transparent',
+            zIndex: 2,
+          }}
+        >
+          <div className="abyss-laser-wrap" aria-hidden="true">
+            <LaserFlow
+              className="abyss-laser-flow"
+              color="#6EEBFF"
+              horizontalBeamOffset={0.1}
+              verticalBeamOffset={0.0}
+              horizontalSizing={0.5}
+              verticalSizing={2}
+              wispDensity={1}
+              wispSpeed={15}
+              wispIntensity={5}
+              flowSpeed={0.35}
+              flowStrength={0.25}
+              fogIntensity={0.45}
+              fogScale={0.3}
+              fogFallSpeed={0.6}
+              decay={1.1}
+              falloffStart={1.2}
+            />
+          </div>
 
+          {showAbyss && (
             <div
               onClick={handleEnter}
               className="abyss-entry-box"
@@ -312,8 +231,8 @@ export default function LandingPage() {
                 pauseBetweenAnimations={1}
               />
             </div>
-          </div>
-        )}
+          )}
+        </div>
 
       </div>
     </div>
