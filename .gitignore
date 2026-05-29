@@ -1,0 +1,81 @@
+# Python runtime / virtual environments
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.pyd
+*.egg
+*.egg-info/
+dist/
+build/
+*.manifest
+*.spec
+
+# Virtual environment directories
+.venv/
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# pip / poetry / pipenv
+pip-wheel-metadata/
+*.whl
+poetry.lock
+Pipfile.lock
+requirements.txt  # keep if you want to track, otherwise comment out
+
+# Testing / coverage
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+.pytest_cache/
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+
+# MyPy / type checking
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# IDE / editor files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.code-workspace
+*.swp
+*~
+.DS_Store
+Thumbs.db
+
+# Environment files
+.env
+.env.*
+!.env.example   # keep the example file in the repo
+
+# Firebase credentials (keep out of VCS)
+firebase-credentials.json
+
+# FastAPI / ASGI
+*.log
+*.pid
+
+# Railway / deployment artifacts
+railway.json
+Procfile
+
+# Nix / Nixpacks
+.nix/
+.nixpkgs/
+.nix-shell
+
+# Miscellaneous
+*.bak
+*.tmp
+*.orig

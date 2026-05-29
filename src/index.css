@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html, body {
+    @apply m-0 p-0 w-full h-full overflow-hidden bg-black;
+  }
+}
+
+.quote-proximity {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(1.15rem, 1.8vw, 1.4rem);
+  color: rgba(255, 255, 255, 0.88);
+  line-height: 2.2;
+  letter-spacing: 0.04em;
+  text-align: center;
+  max-width: 480px;
+}
+
+.shiny-text {
+  font-family: 'Cormorant Garamond', serif !important;
+  font-size: 1rem !important;
+  letter-spacing: 0.25em !important;
+  text-transform: uppercase !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+}
