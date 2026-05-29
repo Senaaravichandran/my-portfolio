@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import * as THREE from 'three';
 import './LaserFlow.css';
 
@@ -243,6 +243,7 @@ export const LaserFlow = ({
   style,
   wispDensity = 1,
   dpr,
+  alwaysRender = false,
   mouseSmoothTime = 0.0,
   mouseTiltStrength = 0.01,
   horizontalBeamOffset = 0.1,
@@ -263,7 +264,7 @@ export const LaserFlow = ({
   const mountRef = useRef(null);
   const rendererRef = useRef(null);
   const uniformsRef = useRef(null);
-  const hasFadedRef = useRef(false);
+  const hasFadedRef = useRef(true);
   const rectRef = useRef(null);
   const baseDprRef = useRef(1);
   const currentDprRef = useRef(1);
@@ -286,8 +287,17 @@ export const LaserFlow = ({
     return { r: ((n >> 16) & 255) / 255, g: ((n >> 8) & 255) / 255, b: (n & 255) / 255 };
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const mount = mountRef.current;
+    if (!mount) return;
+
+    lastSizeRef.current = { width: 0, height: 0, dpr: 0 };
+    fpsSamplesRef.current = [];
+    lastFpsCheckRef.current = performance.now();
+    emaDtRef.current = 16.7;
+    pausedRef.current = document.hidden;
+    inViewRef.current = true;
+
     const renderer = new THREE.WebGLRenderer({
       antialias: false,
       alpha: false,
@@ -360,6 +370,7 @@ export const LaserFlow = ({
     const mesh = new THREE.Mesh(geometry, material);
     mesh.frustumCulled = false;
     scene.add(mesh);
+    renderer.compile(scene, camera);
 
     const clock = new THREE.Clock();
     let prevTime = 0;
@@ -368,7 +379,7 @@ export const LaserFlow = ({
     const mouseTarget = new THREE.Vector2(0, 0);
     const mouseSmooth = new THREE.Vector2(0, 0);
 
-    const setSizeNow = () => {
+    const setSizeNow = (force = false) => {
       const w = mount.clientWidth || 1;
       const h = mount.clientHeight || 1;
       const pr = currentDprRef.current;
@@ -376,7 +387,7 @@ export const LaserFlow = ({
       const last = lastSizeRef.current;
       const sizeChanged = Math.abs(w - last.width) > 0.5 || Math.abs(h - last.height) > 0.5;
       const dprChanged = Math.abs(pr - last.dpr) > 0.01;
-      if (!sizeChanged && !dprChanged) {
+      if (!force && !sizeChanged && !dprChanged) {
         return;
       }
 
@@ -392,22 +403,25 @@ export const LaserFlow = ({
     };
 
     let resizeRaf = 0;
-    const scheduleResize = () => {
+    const scheduleResize = (force = false) => {
       if (resizeRaf) cancelAnimationFrame(resizeRaf);
-      resizeRaf = requestAnimationFrame(setSizeNow);
+      resizeRaf = requestAnimationFrame(() => setSizeNow(force));
     };
 
-    setSizeNow();
+    setSizeNow(true);
     const ro = new ResizeObserver(scheduleResize);
     ro.observe(mount);
 
-    const io = new IntersectionObserver(
-      entries => {
-        inViewRef.current = entries[0]?.isIntersecting ?? true;
-      },
-      { root: null, threshold: 0 }
-    );
-    io.observe(mount);
+    let io = null;
+    if (!alwaysRender) {
+      io = new IntersectionObserver(
+        entries => {
+          inViewRef.current = entries[0]?.isIntersecting ?? true;
+        },
+        { root: null, threshold: 0 }
+      );
+      io.observe(mount);
+    }
 
     const onVis = () => {
       pausedRef.current = document.hidden;
@@ -436,7 +450,8 @@ export const LaserFlow = ({
     };
     const onCtxRestored = () => {
       pausedRef.current = false;
-      scheduleResize();
+      lastSizeRef.current = { width: 0, height: 0, dpr: 0 };
+      scheduleResize(true);
     };
     canvas.addEventListener('webglcontextlost', onCtxLost, false);
     canvas.addEventListener('webglcontextrestored', onCtxRestored, false);
@@ -520,8 +535,9 @@ export const LaserFlow = ({
 
     return () => {
       cancelAnimationFrame(raf);
+      if (resizeRaf) cancelAnimationFrame(resizeRaf);
       ro.disconnect();
-      io.disconnect();
+      io?.disconnect();
       document.removeEventListener('visibilitychange', onVis);
       canvas.removeEventListener('pointermove', onMove);
       canvas.removeEventListener('pointerdown', onMove);
@@ -532,8 +548,8 @@ export const LaserFlow = ({
       geometry.dispose();
       material.dispose();
       renderer.dispose();
-      renderer.forceContextLoss();
       if (mount.contains(canvas)) mount.removeChild(canvas);
+      lastSizeRef.current = { width: 0, height: 0, dpr: 0 };
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dpr]);

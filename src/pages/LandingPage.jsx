@@ -9,7 +9,7 @@ import './LandingPage.css';
 export default function LandingPage() {
   const [leaving, setLeaving] = useState(false);
   const [quoteLineComplete, setQuoteLineComplete] = useState(false);
-  const [showAbyss, setShowAbyss] = useState(false);
+  const [entryReady, setEntryReady] = useState(false);
   const navigate = useNavigate();
   const quoteRef = useRef(null);
 
@@ -145,7 +145,7 @@ export default function LandingPage() {
               threshold={0.1}
               rootMargin="0px"
               stepDuration={0.35}
-              onAnimationComplete={() => setShowAbyss(true)}
+              onAnimationComplete={() => setEntryReady(true)}
             />
           )}
         </div>
@@ -160,43 +160,44 @@ export default function LandingPage() {
         </div>
 
         {/* ELEMENT 3: CTA BUTTON */}
-        <div
-          className={`abyss-flow-stage ${showAbyss ? 'is-visible' : ''}`}
-          style={{
-            '--abyss-impact-x': 'calc(100% - 190px)',
-            '--abyss-impact-y': 'calc(100% - 105px)',
-            height: '100vh',
-            width: '100%',
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            overflow: 'hidden',
-            backgroundColor: 'transparent',
-            zIndex: 2,
-          }}
-        >
-          <div className="abyss-laser-wrap" aria-hidden="true">
-            <LaserFlow
-              className="abyss-laser-flow"
-              color="#6EEBFF"
-              horizontalBeamOffset={0.1}
-              verticalBeamOffset={0.0}
-              horizontalSizing={0.5}
-              verticalSizing={2}
-              wispDensity={1}
-              wispSpeed={15}
-              wispIntensity={5}
-              flowSpeed={0.35}
-              flowStrength={0.25}
-              fogIntensity={0.45}
-              fogScale={0.3}
-              fogFallSpeed={0.6}
-              decay={1.1}
-              falloffStart={1.2}
-            />
-          </div>
+        {entryReady && (
+          <div
+            className="abyss-flow-stage abyss-flow-stage--revealed"
+            style={{
+              '--abyss-impact-x': 'calc(100% - 190px)',
+              '--abyss-impact-y': 'calc(100% - 105px)',
+              height: '100vh',
+              width: '100%',
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              overflow: 'hidden',
+              backgroundColor: 'transparent',
+              zIndex: 2,
+            }}
+          >
+            <div className="abyss-laser-wrap" aria-hidden="true">
+              <LaserFlow
+                className="abyss-laser-flow"
+                alwaysRender
+                color="#6EEBFF"
+                horizontalBeamOffset={0.1}
+                verticalBeamOffset={0.0}
+                horizontalSizing={0.5}
+                verticalSizing={2}
+                wispDensity={1}
+                wispSpeed={15}
+                wispIntensity={5}
+                flowSpeed={0.35}
+                flowStrength={0.25}
+                fogIntensity={0.45}
+                fogScale={0.3}
+                fogFallSpeed={0.6}
+                decay={1.1}
+                falloffStart={1.2}
+              />
+            </div>
 
-          {showAbyss && (
             <div
               onClick={handleEnter}
               className="abyss-entry-box"
@@ -231,8 +232,8 @@ export default function LandingPage() {
                 pauseBetweenAnimations={1}
               />
             </div>
-          )}
-        </div>
+          </div>
+        )}
 
       </div>
     </div>

@@ -4,12 +4,25 @@
   position: relative;
   overflow: hidden;
   background: transparent;
-  opacity: 0;
   pointer-events: none;
 }
 
-.abyss-flow-stage.is-visible {
-  opacity: 1;
+.abyss-flow-stage--revealed {
+  animation: abyssStageReveal 0.8s ease-out both;
+}
+
+@keyframes abyssStageReveal {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+    filter: blur(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
 }
 
 .landing-content-panel {
@@ -74,6 +87,8 @@
 
 .abyss-laser-flow {
   overflow: visible !important;
+  position: relative;
+  z-index: 1;
 }
 
 .abyss-laser-flow canvas {
