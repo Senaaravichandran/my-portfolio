@@ -1,0 +1,226 @@
+.dock-outer {
+  position: fixed;
+  left: 50%;
+  bottom: 26px;
+  z-index: 5;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  width: min(520px, calc(100vw - 28px));
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.dock-panel {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border: 1px solid rgba(110, 235, 255, 0.24);
+  border-radius: 22px;
+  background:
+    linear-gradient(180deg, rgba(15, 24, 31, 0.74), rgba(5, 8, 12, 0.84)),
+    radial-gradient(circle at 50% 0%, rgba(110, 235, 255, 0.16), transparent 65%);
+  box-shadow:
+    0 0 34px rgba(110, 235, 255, 0.12),
+    0 18px 50px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  isolation: isolate;
+  pointer-events: auto;
+  backdrop-filter: blur(18px);
+}
+
+.dock-gooey-effect {
+  --dock-gooey-color-1: #6eebff;
+  --dock-gooey-color-2: #66ffd1;
+  --dock-gooey-color-3: #ffffff;
+  --dock-gooey-color-4: #9fc7ff;
+  position: absolute;
+  left: var(--effect-x, 37px);
+  top: var(--effect-y, 58px);
+  z-index: 1;
+  width: var(--effect-width, 32px);
+  height: 18px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  filter: url('#dock-gooey-filter');
+}
+
+.dock-gooey-effect::before {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 100%;
+  height: 6px;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.95), rgba(110, 235, 255, 0.82) 42%, rgba(102, 255, 209, 0.38) 78%);
+  box-shadow:
+    0 0 14px rgba(110, 235, 255, 0.74),
+    0 0 28px rgba(102, 255, 209, 0.34);
+  content: '';
+  opacity: 0.82;
+  transform: translate(-50%, -50%);
+}
+
+.dock-gooey-effect.is-active::before {
+  animation: dockGooeyPulse 620ms ease-out both;
+}
+
+.dock-gooey-particle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 9px;
+  height: 9px;
+  transform:
+    translate(-50%, -50%)
+    translate(var(--start-x), var(--start-y))
+    scale(var(--scale))
+    rotate(var(--rotate));
+  animation: dockGooeyParticle var(--time) cubic-bezier(0.17, 0.67, 0.36, 1) forwards;
+  color: var(--color);
+}
+
+.dock-gooey-point {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 999px;
+  background: currentColor;
+  box-shadow: 0 0 12px currentColor;
+}
+
+.dock-item {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 1px solid rgba(178, 245, 255, 0.18);
+  border-radius: 16px;
+  color: rgba(232, 252, 255, 0.82);
+  background:
+    radial-gradient(circle at 50% 18%, rgba(110, 235, 255, 0.18), transparent 55%),
+    linear-gradient(180deg, rgba(12, 19, 27, 0.96), rgba(3, 6, 10, 0.96));
+  box-shadow:
+    0 8px 26px rgba(0, 0, 0, 0.36),
+    inset 0 0 18px rgba(110, 235, 255, 0.06);
+  cursor: pointer;
+  outline: none;
+}
+
+.dock-item:hover,
+.dock-item:focus-visible,
+.dock-item.is-active {
+  border-color: rgba(110, 235, 255, 0.78);
+  color: #f4feff;
+  box-shadow:
+    0 0 22px rgba(110, 235, 255, 0.26),
+    0 12px 32px rgba(0, 0, 0, 0.45),
+    inset 0 0 20px rgba(110, 235, 255, 0.16);
+}
+
+.dock-item:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.82);
+  outline-offset: 4px;
+}
+
+.dock-icon {
+  display: grid;
+  place-items: center;
+  width: 56%;
+  aspect-ratio: 1;
+}
+
+.dock-icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  stroke: currentColor;
+  filter: drop-shadow(0 0 9px rgba(110, 235, 255, 0.18));
+}
+
+.dock-label {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 15px);
+  z-index: 4;
+  padding: 7px 10px;
+  border: 1px solid rgba(110, 235, 255, 0.24);
+  border-radius: 10px;
+  color: rgba(241, 253, 255, 0.96);
+  background: rgba(5, 8, 12, 0.92);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.42);
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.75rem;
+  line-height: 1;
+  letter-spacing: 0;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.dock-svg-filter {
+  position: absolute;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+@keyframes dockGooeyPulse {
+  0% {
+    opacity: 0.34;
+    transform: translate(-50%, -50%) scaleX(0.68);
+  }
+
+  40% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scaleX(1.28);
+  }
+
+  100% {
+    opacity: 0.82;
+    transform: translate(-50%, -50%) scaleX(1);
+  }
+}
+
+@keyframes dockGooeyParticle {
+  0% {
+    opacity: 0;
+    transform:
+      translate(-50%, -50%)
+      translate(var(--start-x), var(--start-y))
+      scale(0.36)
+      rotate(0deg);
+  }
+
+  28% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform:
+      translate(-50%, -50%)
+      translate(var(--end-x), var(--end-y))
+      scale(var(--scale))
+      rotate(var(--rotate));
+  }
+}
+
+@media (max-width: 760px) {
+  .dock-outer {
+    bottom: 18px;
+    width: calc(100vw - 20px);
+  }
+
+  .dock-panel {
+    gap: 8px;
+    padding: 8px 10px;
+    border-radius: 20px;
+  }
+}
