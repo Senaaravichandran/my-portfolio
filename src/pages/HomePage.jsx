@@ -22,83 +22,6 @@ function DockSvg({ children }) {
   );
 }
 
-function ProfileIcon({ type }) {
-  const icons = {
-    location: (
-      <>
-        <path d="M12 21s6-5.2 6-11a6 6 0 0 0-12 0c0 5.8 6 11 6 11Z" />
-        <circle cx="12" cy="10" r="2.1" />
-      </>
-    ),
-    contact: (
-      <>
-        <path d="M6.6 4.8 8.9 4l2.1 4.8-1.6 1.1a12.1 12.1 0 0 0 4.7 4.7l1.1-1.6 4.8 2.1-.8 2.3c-.4 1.1-1.5 1.8-2.7 1.6C10.5 18 6 13.5 5 7.5c-.2-1.2.5-2.3 1.6-2.7Z" />
-      </>
-    ),
-    mail: (
-      <>
-        <path d="M4.5 6.5h15v11h-15z" />
-        <path d="m5 7 7 6 7-6" />
-      </>
-    ),
-    linkedin: (
-      <>
-        <path d="M6.7 10v7.4" />
-        <path d="M6.7 6.7v.1" />
-        <path d="M11 17.4V10" />
-        <path d="M11 13.1c0-2 1.1-3.3 3-3.3 1.7 0 2.8 1.1 2.8 3.2v4.4" />
-      </>
-    ),
-    github: (
-      <>
-        <path d="M9 19c-4 1.2-4-2-5.6-2.4" />
-        <path d="M15 22v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.7-1.4 5.7-6.2A4.8 4.8 0 0 0 19 7c.1-.4.5-1.8-.2-3.2 0 0-1.1-.3-3.5 1.3a12 12 0 0 0-6.3 0C6.6 3.5 5.5 3.8 5.5 3.8 4.8 5.2 5.2 6.6 5.3 7A4.8 4.8 0 0 0 4 10.3c0 4.8 2.9 5.9 5.7 6.2-.5.5-.7 1.1-.7 2V22" />
-      </>
-    ),
-    leetcode: (
-      <>
-        <path d="m14.2 5.2-6.5 6.5a3.3 3.3 0 0 0 0 4.6l1.2 1.2a3.3 3.3 0 0 0 4.6 0l1.6-1.6" />
-        <path d="m9.5 9.9 3.9 3.9" />
-        <path d="M12.7 4.1 17 8.4" />
-        <path d="M11 14h7" />
-      </>
-    ),
-    medium: (
-      <>
-        <path d="M4.5 7.5h3l3.5 8.2 3.5-8.2h3" />
-        <path d="M6 7.8v8.4" />
-        <path d="M18 7.8v8.4" />
-      </>
-    ),
-    chess: (
-      <>
-        <path d="M8 20h9" />
-        <path d="M9 17h7" />
-        <path d="M10 17c.2-2.6 1.2-4.7 2.9-6.1l-2.2-1.2L13 4l4 2.5-1.3 3.1c2.1 1.3 2.2 4.6.3 7.4" />
-      </>
-    ),
-    game: (
-      <>
-        <path d="M12 3.5 19 6v5.2c0 4.2-2.8 7.8-7 9.3-4.2-1.5-7-5.1-7-9.3V6l7-2.5Z" />
-        <path d="M9 11h6" />
-        <path d="M12 8v6" />
-      </>
-    ),
-    soon: (
-      <>
-        <path d="M12 5v5l3 2" />
-        <circle cx="12" cy="12" r="8" />
-      </>
-    )
-  };
-
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
-      {icons[type]}
-    </svg>
-  );
-}
-
 const profileLinks = [
   {
     id: 'location',
@@ -106,7 +29,7 @@ const profileLinks = [
     description: 'From French Streets to Future Technologies',
     href: 'https://www.google.com/maps/place/Puducherry',
     color: 'cyan',
-    icon: <ProfileIcon type="location" />
+    logo: '/images/social/location.png'
   },
   {
     id: 'contact',
@@ -114,7 +37,7 @@ const profileLinks = [
     description: 'Reach Me Across Calls, WhatsApp, Telegram & More',
     href: 'https://wa.me/917418887124',
     color: 'green',
-    icon: <ProfileIcon type="contact" />
+    logo: '/images/social/phone.png'
   },
   {
     id: 'mail',
@@ -122,7 +45,7 @@ const profileLinks = [
     description: "Let's connect, collaborate, and build something impactful together",
     href: 'mailto:senaaravichandran@gmail.com',
     color: 'blue',
-    icon: <ProfileIcon type="mail" />
+    logo: '/images/social/Gmail.png'
   },
   {
     id: 'linkedin',
@@ -130,7 +53,7 @@ const profileLinks = [
     description: 'Connect with my professional journey, achievements, and industry network',
     href: 'https://www.linkedin.com/in/senaa2407',
     color: 'indigo',
-    icon: <ProfileIcon type="linkedin" />
+    logo: '/images/social/linkedin.png'
   },
   {
     id: 'github',
@@ -138,7 +61,7 @@ const profileLinks = [
     description: 'The blueprint behind my engineering journey',
     href: 'https://github.com/Senaaravichandran',
     color: 'graphite',
-    icon: <ProfileIcon type="github" />
+    logo: '/images/social/github.png'
   },
   {
     id: 'leetcode',
@@ -146,7 +69,7 @@ const profileLinks = [
     description: 'Practicing the art of problem-solving through code',
     href: 'https://leetcode.com/u/Senaaravichandran/',
     color: 'orange',
-    icon: <ProfileIcon type="leetcode" />
+    logo: '/images/social/leetcode.png'
   },
   {
     id: 'medium',
@@ -154,7 +77,7 @@ const profileLinks = [
     description: 'Documenting curiosity, innovation, research, and the experiences that fuel my growth',
     href: 'https://medium.com/@senaaravichandran',
     color: 'graphite',
-    icon: <ProfileIcon type="medium" />
+    logo: '/images/social/medium.png'
   },
   {
     id: 'chess',
@@ -162,7 +85,7 @@ const profileLinks = [
     description: 'Shaping the way I approach problems, decisions, and uncertainty through chess',
     href: 'https://www.chess.com/member/Senaa2407',
     color: 'purple',
-    icon: <ProfileIcon type="chess" />
+    logo: '/images/social/chess.png'
   },
   {
     id: 'clash',
@@ -170,7 +93,7 @@ const profileLinks = [
     description: 'Learning resource management, long-term planning, and strategic execution through Clash of Clans',
     href: 'https://link.clashofclans.com/en?action=OpenPlayerProfile&tag=%23PCQYQUG9V',
     color: 'red',
-    icon: <ProfileIcon type="game" />
+    logo: '/images/social/clash-of-clans.png'
   },
   {
     id: 'soon',
@@ -178,7 +101,7 @@ const profileLinks = [
     description: 'Unknown',
     href: '',
     color: 'graphite',
-    icon: <ProfileIcon type="soon" />
+    logo: '/images/social/soon.png'
   }
 ];
 
@@ -392,13 +315,39 @@ export default function HomePage() {
                   <span className="profile-link-detail__label">{activeProfileLink.label}</span>
                   <p>{activeProfileLink.description}</p>
                   {activeProfileLink.href ? (
-                    <a className="profile-link-detail__visit" href={activeProfileLink.href} target="_blank" rel="noreferrer">
-                      Visit
-                    </a>
+                    <BorderGlow
+                      className="profile-visit-glow"
+                      edgeSensitivity={16}
+                      glowColor="190 100 74"
+                      backgroundColor="rgba(7, 18, 24, 0.78)"
+                      borderRadius={10}
+                      glowRadius={22}
+                      glowIntensity={0.78}
+                      coneSpread={28}
+                      colors={['#6EEBFF', '#66FFD1', '#38BDF8']}
+                      fillOpacity={0.2}
+                    >
+                      <a className="profile-link-detail__visit" href={activeProfileLink.href} target="_blank" rel="noreferrer">
+                        Visit
+                      </a>
+                    </BorderGlow>
                   ) : (
-                    <button className="profile-link-detail__visit is-disabled" type="button" disabled>
-                      Visit
-                    </button>
+                    <BorderGlow
+                      className="profile-visit-glow is-disabled"
+                      edgeSensitivity={16}
+                      glowColor="190 100 74"
+                      backgroundColor="rgba(7, 18, 24, 0.42)"
+                      borderRadius={10}
+                      glowRadius={18}
+                      glowIntensity={0.45}
+                      coneSpread={28}
+                      colors={['#6EEBFF', '#66FFD1', '#38BDF8']}
+                      fillOpacity={0.1}
+                    >
+                      <button className="profile-link-detail__visit is-disabled" type="button" disabled>
+                        Visit
+                      </button>
+                    </BorderGlow>
                   )}
                 </div>
               )}

@@ -30,7 +30,7 @@ export default function GlassIcons({ items, activeId, onSelect, className = '' }
           <span className="icon-btn__back" style={getBackgroundStyle(item.color)} />
           <span className="icon-btn__front">
             <span className="icon-btn__icon" aria-hidden="true">
-              {item.icon}
+              {item.logo ? <img src={item.logo} alt="" draggable="false" /> : item.icon}
             </span>
           </span>
         </button>
