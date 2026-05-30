@@ -1,8 +1,11 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import BorderGlow from '../components/BorderGlow/BorderGlow';
 import Dock from '../components/Dock/Dock';
+import GradualBlur from '../components/GradualBlur/GradualBlur';
 import LetterGlitch from '../components/LetterGlitch/LetterGlitch';
 import LightRays from '../components/LightRays/LightRays';
+import PixelTransition from '../components/PixelTransition/PixelTransition';
 import ProfileCard from '../components/ProfileCard/ProfileCard';
 import './HomePage.css';
 
@@ -21,12 +24,67 @@ function DockSvg({ children }) {
 export default function HomePage() {
   const [introPhase, setIntroPhase] = useState('active');
   const [activeDock, setActiveDock] = useState(() => window.location.hash.replace('#', '') || 'home');
+  const [transitionTarget, setTransitionTarget] = useState(null);
+  const wheelLockRef = useRef(false);
+  const transitionTimerRef = useRef(null);
   const navigate = useNavigate();
 
-  const selectDock = useCallback(id => {
+  const setDockImmediate = useCallback(id => {
     setActiveDock(id);
     window.history.replaceState(null, '', `#${id}`);
   }, []);
+
+  const getTransitionDirection = useCallback((from, to) => {
+    if (from === 'home' && to === 'profile') return 'down';
+    if (from === 'profile' && to === 'home') return 'up';
+    return null;
+  }, []);
+
+  const selectDock = useCallback(
+    id => {
+      if (transitionTimerRef.current) {
+        window.clearTimeout(transitionTimerRef.current);
+        transitionTimerRef.current = null;
+      }
+
+      const transitionDirection = introPhase === 'done' ? getTransitionDirection(activeDock, id) : null;
+
+      if (!transitionDirection) {
+        setTransitionTarget(null);
+        setDockImmediate(id);
+        return;
+      }
+
+      setTransitionTarget({ id, direction: transitionDirection });
+      transitionTimerRef.current = window.setTimeout(() => {
+        setDockImmediate(id);
+        setTransitionTarget(null);
+        transitionTimerRef.current = null;
+      }, 460);
+    },
+    [activeDock, getTransitionDirection, introPhase, setDockImmediate]
+  );
+
+  const handlePageWheel = useCallback(
+    event => {
+      const normalizedDeltaY =
+        event.deltaMode === 1 ? event.deltaY * 16 : event.deltaMode === 2 ? event.deltaY * window.innerHeight : event.deltaY;
+
+      if (introPhase !== 'done' || wheelLockRef.current || Math.abs(normalizedDeltaY) < 8) return;
+
+      const nextDock =
+        normalizedDeltaY > 0 && activeDock === 'home' ? 'profile' : normalizedDeltaY < 0 && activeDock === 'profile' ? 'home' : null;
+      if (!nextDock) return;
+
+      event.preventDefault();
+      wheelLockRef.current = true;
+      selectDock(nextDock);
+      window.setTimeout(() => {
+        wheelLockRef.current = false;
+      }, 760);
+    },
+    [activeDock, introPhase, selectDock]
+  );
 
   const dockItems = useMemo(() => {
     const createItem = (id, label, icon) => ({
@@ -111,6 +169,18 @@ export default function HomePage() {
     };
   }, []);
 
+  useEffect(
+    () => () => {
+      if (transitionTimerRef.current) window.clearTimeout(transitionTimerRef.current);
+    },
+    []
+  );
+
+  useEffect(() => {
+    window.addEventListener('wheel', handlePageWheel, { passive: false });
+    return () => window.removeEventListener('wheel', handlePageWheel);
+  }, [handlePageWheel]);
+
   return (
     <main className="home-page" aria-label="Home">
       {introPhase !== 'done' && (
@@ -141,11 +211,12 @@ export default function HomePage() {
                 fadeDistance={1}
                 saturation={1}
                 followMouse
-                mouseInfluence={0.1}
+                mouseInfluence={0.42}
                 noiseAmount={0}
                 distortion={0}
-                resolutionScale={0.48}
-                maxFrameRate={30}
+                resolutionScale={0.5}
+                maxFrameRate={60}
+                idleFrameRate={10}
               />
               <div className="home-portfolio-content">
                 <p className="home-portfolio-kicker">SENAARAVICHANDRAN A</p>
@@ -159,7 +230,7 @@ export default function HomePage() {
                   • 9× Hackathon Winner • AI Engineer • ML Innovater • Data Intelligence • Blockchain Tinkerer • Quantum Computing
                   Visionary • Researcher • Builder
                 </p>
-                <button className="home-archive-btn" type="button" onClick={() => selectDock('work')}>
+                <button className="home-archive-btn" type="button" onClick={() => selectDock('profile')}>
                   ENTER THE ARCHIVE
                 </button>
               </div>
@@ -183,6 +254,72 @@ export default function HomePage() {
                 onContactClick={() => selectDock('contact')}
               />
             </div>
+          </div>
+        )}
+        {introPhase === 'done' && activeDock === 'profile' && (
+          <section className="profile-archive-stage" aria-label="Profile archive">
+            <div className="profile-archive-copy">
+              <p className="profile-archive-kicker">PROFILE ARCHIVE</p>
+              <h2>Proofs of work, framed in motion.</h2>
+              <p>
+                A living index of experiments, systems, and artifacts from AI engineering, data intelligence, autonomous agents,
+                blockchain builds, and research-led prototypes.
+              </p>
+              <p className="profile-archive-note">Hover the portrait to reveal the archive signal.</p>
+            </div>
+            <div className="profile-pixel-pane">
+              <BorderGlow
+                className="profile-border-glow"
+                edgeSensitivity={30}
+                glowColor="190 100 74"
+                backgroundColor="#02070a"
+                borderRadius={24}
+                glowRadius={36}
+                glowIntensity={0.92}
+                coneSpread={25}
+                animated
+                colors={['#6EEBFF', '#66FFD1', '#38BDF8']}
+                fillOpacity={0.22}
+              >
+                <PixelTransition
+                  className="profile-pixel-card"
+                  firstContent={
+                    <img
+                      src="/images/pixel-icon.jpg"
+                      alt="Senaaravichandran A archive portrait"
+                      className="profile-pixel-image"
+                      loading="eager"
+                    />
+                  }
+                  secondContent={
+                    <div className="profile-pixel-reveal">
+                      <span>Senaaravichandran A</span>
+                      <strong>AI Engineer</strong>
+                      <small>Archive loading</small>
+                    </div>
+                  }
+                  gridSize={14}
+                  pixelColor="#6EEBFF"
+                  animationStepDuration={0.42}
+                  aspectRatio="221.97%"
+                />
+              </BorderGlow>
+            </div>
+          </section>
+        )}
+        {transitionTarget && (
+          <div className={`section-transition-blur section-transition-blur--${transitionTarget.direction}`} aria-hidden="true">
+            <GradualBlur
+              target="parent"
+              position={transitionTarget.direction === 'up' ? 'top' : 'bottom'}
+              height="6rem"
+              strength={2}
+              divCount={5}
+              curve="bezier"
+              exponential
+              opacity={1}
+              zIndex={2}
+            />
           </div>
         )}
         {introPhase === 'done' && <Dock items={dockItems} />}

@@ -46,6 +46,7 @@ const LightRays = ({
   distortion = 0,
   resolutionScale = 1,
   maxFrameRate = 60,
+  idleFrameRate,
   className = ''
 }) => {
   const containerRef = useRef(null);
@@ -54,6 +55,9 @@ const LightRays = ({
   const mouseRef = useRef({ x: 0.5, y: 0.5 });
   const smoothMouseRef = useRef({ x: 0.5, y: 0.5 });
   const animationIdRef = useRef(null);
+  const timeoutIdRef = useRef(null);
+  const lastMouseMoveTsRef = useRef(0);
+  const wakeRenderRef = useRef(null);
   const meshRef = useRef(null);
   const cleanupFunctionRef = useRef(null);
   const observerRef = useRef(null);
@@ -235,10 +239,25 @@ void main() {
       };
 
       let lastRenderTs = 0;
-      const minFrameTime = 1000 / Math.max(1, maxFrameRate);
+      const activeFrameTime = 1000 / Math.max(1, maxFrameRate);
+      const idleFrameTime = 1000 / Math.max(1, idleFrameRate ?? maxFrameRate);
+      const activeAfterMouseMs = 720;
+
+      const scheduleNextFrame = delay => {
+        if (timeoutIdRef.current) window.clearTimeout(timeoutIdRef.current);
+        if (animationIdRef.current) cancelAnimationFrame(animationIdRef.current);
+
+        timeoutIdRef.current = window.setTimeout(() => {
+          timeoutIdRef.current = null;
+          animationIdRef.current = requestAnimationFrame(loop);
+        }, delay);
+      };
 
       const loop = t => {
         if (!rendererRef.current || !uniformsRef.current || !meshRef.current) return;
+
+        const mouseIsActive = followMouse && mouseInfluence > 0 && t - lastMouseMoveTsRef.current < activeAfterMouseMs;
+        const minFrameTime = mouseIsActive ? activeFrameTime : idleFrameTime;
 
         if (t - lastRenderTs >= minFrameTime) {
           lastRenderTs = t;
@@ -254,16 +273,20 @@ void main() {
           renderer.render({ scene: mesh });
         }
 
-        animationIdRef.current = requestAnimationFrame(loop);
+        scheduleNextFrame(Math.max(0, minFrameTime - (performance.now() - lastRenderTs)));
       };
 
       window.addEventListener('resize', updatePlacement);
+      wakeRenderRef.current = () => scheduleNextFrame(0);
       updatePlacement();
-      animationIdRef.current = requestAnimationFrame(loop);
+      scheduleNextFrame(0);
 
       cleanupFunctionRef.current = () => {
         if (animationIdRef.current) cancelAnimationFrame(animationIdRef.current);
+        if (timeoutIdRef.current) window.clearTimeout(timeoutIdRef.current);
         animationIdRef.current = null;
+        timeoutIdRef.current = null;
+        wakeRenderRef.current = null;
         window.removeEventListener('resize', updatePlacement);
 
         const canvas = renderer.gl.canvas;
@@ -297,7 +320,8 @@ void main() {
     noiseAmount,
     distortion,
     resolutionScale,
-    maxFrameRate
+    maxFrameRate,
+    idleFrameRate
   ]);
 
   useEffect(() => {
@@ -341,13 +365,15 @@ void main() {
     const handleMouseMove = e => {
       if (!containerRef.current || !rendererRef.current) return;
       const rect = containerRef.current.getBoundingClientRect();
+      lastMouseMoveTsRef.current = performance.now();
       mouseRef.current = {
         x: (e.clientX - rect.left) / rect.width,
         y: (e.clientY - rect.top) / rect.height
       };
+      wakeRenderRef.current?.();
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, [followMouse]);
 
