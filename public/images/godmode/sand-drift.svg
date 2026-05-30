@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 760" role="img" aria-label="black and white wind shaped sand">
+  <filter id="grain">
+    <feTurbulence type="fractalNoise" baseFrequency="1.05" numOctaves="4" seed="22"/>
+    <feColorMatrix type="saturate" values="0"/>
+    <feComponentTransfer>
+      <feFuncA type="table" tableValues="0.1 0.38"/>
+    </feComponentTransfer>
+  </filter>
+  <filter id="soften">
+    <feGaussianBlur stdDeviation="1.4"/>
+  </filter>
+  <rect width="1400" height="760" fill="#555"/>
+  <g filter="url(#soften)">
+    <path d="M-80 128C176 12 315 142 560 66s416-6 572 40 250 1 350-42v696H-80z" fill="#1d1d1d" opacity=".74"/>
+    <path d="M-65 132C142 65 318 165 528 104s379-33 570 19 278 14 410-55v130C1295 288 1141 162 914 226s-348 27-554-21S36 218-65 278z" fill="#e8e8e8" opacity=".34"/>
+    <path d="M-90 286C86 223 255 318 470 246s411-53 604 1 287 54 426-12v166c-196 51-309 19-489-19s-352-22-542 35-395 35-559-28z" fill="#fafafa" opacity=".25"/>
+    <path d="M-90 455C84 382 247 508 467 424s423-46 620 9 288 32 413-41v202c-206 42-380-37-584-9s-303 99-519 64S34 560-90 644z" fill="#0d0d0d" opacity=".5"/>
+  </g>
+  <rect width="1400" height="760" filter="url(#grain)" fill="#fff" opacity=".72"/>
+  <rect width="1400" height="760" fill="url(#v)"/>
+  <defs>
+    <radialGradient id="v" cx="50%" cy="38%" r="78%">
+      <stop offset="0" stop-color="#fff" stop-opacity=".12"/>
+      <stop offset=".55" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity=".54"/>
+    </radialGradient>
+  </defs>
+</svg>

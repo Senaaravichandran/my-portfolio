@@ -1,0 +1,105 @@
+.icon-btns {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(58px, 1fr));
+  gap: clamp(18px, 2.2vw, 34px);
+  width: 100%;
+  max-width: 620px;
+  overflow: visible;
+}
+
+.icon-btn {
+  position: relative;
+  width: clamp(4rem, 5vw, 4.75rem);
+  height: clamp(4rem, 5vw, 4.75rem);
+  margin: auto;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+  perspective: 24em;
+  transform-style: preserve-3d;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.icon-btn__back,
+.icon-btn__front {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 1.25em;
+  transition:
+    opacity 0.3s cubic-bezier(0.83, 0, 0.17, 1),
+    transform 0.3s cubic-bezier(0.83, 0, 0.17, 1),
+    box-shadow 0.3s ease;
+}
+
+.icon-btn__back {
+  display: block;
+  box-shadow: 0.5em -0.5em 0.75em hsla(190, 80%, 6%, 0.28);
+  opacity: 0.74;
+  transform: rotate(15deg);
+  transform-origin: 100% 100%;
+  will-change: transform;
+}
+
+.icon-btn__front {
+  display: flex;
+  border: 1px solid rgba(235, 255, 255, 0.28);
+  background-color: rgba(255, 255, 255, 0.12);
+  box-shadow:
+    0 0 0 0.1em hsla(0, 0%, 100%, 0.18) inset,
+    0 16px 34px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(0.75em);
+  -webkit-backdrop-filter: blur(0.75em);
+  transform-origin: 80% 50%;
+  will-change: transform;
+}
+
+.icon-btn__icon {
+  display: flex;
+  width: 1.6em;
+  height: 1.6em;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  color: rgba(241, 253, 255, 0.95);
+}
+
+.icon-btn__icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.icon-btn:focus-visible .icon-btn__back,
+.icon-btn:hover .icon-btn__back,
+.icon-btn.is-active .icon-btn__back {
+  transform: rotate(25deg) translate3d(-0.5em, -0.5em, 0.5em);
+}
+
+.icon-btn:focus-visible .icon-btn__front,
+.icon-btn:hover .icon-btn__front,
+.icon-btn.is-active .icon-btn__front {
+  box-shadow:
+    0 0 0 0.1em hsla(0, 0%, 100%, 0.24) inset,
+    0 18px 44px rgba(0, 0, 0, 0.3),
+    0 0 32px rgba(110, 235, 255, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.24);
+  transform: translate3d(0, 0, 2em);
+}
+
+@media (max-width: 760px) {
+  .icon-btns {
+    grid-template-columns: repeat(5, minmax(42px, 1fr));
+    gap: 14px;
+  }
+
+  .icon-btn {
+    width: 3.2rem;
+    height: 3.2rem;
+  }
+}

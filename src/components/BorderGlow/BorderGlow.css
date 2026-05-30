@@ -1,3 +1,19 @@
+.property-register {
+  display: none;
+}
+
+@property --cursor-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 45deg;
+}
+
+@property --edge-proximity {
+  syntax: '<number>';
+  inherits: false;
+  initial-value: 0;
+}
+
 .border-glow-card {
   --edge-proximity: 0;
   --cursor-angle: 45deg;
@@ -32,14 +48,20 @@
   inset: 0;
   border-radius: inherit;
   transition: opacity 0.25s ease-out;
-  z-index: -1;
+  z-index: 0;
+  pointer-events: none;
 }
 
-.border-glow-card:not(:hover):not(.sweep-active)::before,
-.border-glow-card:not(:hover):not(.sweep-active)::after,
-.border-glow-card:not(:hover):not(.sweep-active) > .edge-light {
+.border-glow-card:not(.is-looping):not(:hover):not(.sweep-active)::before,
+.border-glow-card:not(.is-looping):not(:hover):not(.sweep-active)::after,
+.border-glow-card:not(.is-looping):not(:hover):not(.sweep-active) > .edge-light {
   opacity: 0;
   transition: opacity 0.75s ease-in-out;
+}
+
+.border-glow-card.is-looping {
+  --edge-proximity: 100;
+  animation: borderGlowRotate 4s linear infinite;
 }
 
 .border-glow-card::before {
@@ -97,7 +119,7 @@
 .border-glow-card > .edge-light {
   inset: calc(var(--glow-padding) * -1);
   pointer-events: none;
-  z-index: 1;
+  z-index: 3;
 
   mask-image:
     conic-gradient(
@@ -134,5 +156,15 @@
   flex-direction: column;
   position: relative;
   overflow: auto;
-  z-index: 1;
+  z-index: 2;
+}
+
+@keyframes borderGlowRotate {
+  from {
+    --cursor-angle: 110deg;
+  }
+
+  to {
+    --cursor-angle: 470deg;
+  }
 }

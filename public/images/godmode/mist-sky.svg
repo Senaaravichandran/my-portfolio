@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 760" role="img" aria-label="black and white misty sky">
+  <filter id="clouds">
+    <feTurbulence type="fractalNoise" baseFrequency="0.009 0.024" numOctaves="5" seed="31"/>
+    <feColorMatrix type="saturate" values="0"/>
+    <feComponentTransfer>
+      <feFuncR type="gamma" amplitude="1.2" exponent=".72"/>
+      <feFuncG type="gamma" amplitude="1.2" exponent=".72"/>
+      <feFuncB type="gamma" amplitude="1.2" exponent=".72"/>
+    </feComponentTransfer>
+  </filter>
+  <filter id="grain">
+    <feTurbulence type="fractalNoise" baseFrequency=".65" numOctaves="3" seed="9"/>
+    <feColorMatrix type="saturate" values="0"/>
+    <feComponentTransfer>
+      <feFuncA type="table" tableValues="0 .28"/>
+    </feComponentTransfer>
+  </filter>
+  <rect width="1400" height="760" fill="#b7b7b7"/>
+  <rect width="1400" height="760" filter="url(#clouds)" opacity=".72"/>
+  <path d="M-40 458C160 396 262 488 440 450s284-117 518-56 358-3 494-71v437H-40z" fill="#f1f1f1" opacity=".22"/>
+  <rect width="1400" height="760" filter="url(#grain)" fill="#fff"/>
+  <rect width="1400" height="760" fill="url(#v)"/>
+  <defs>
+    <linearGradient id="v" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity=".22"/>
+      <stop offset=".5" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity=".28"/>
+    </linearGradient>
+  </defs>
+</svg>
