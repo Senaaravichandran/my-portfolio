@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Dock from '../components/Dock/Dock';
 import LetterGlitch from '../components/LetterGlitch/LetterGlitch';
+import LightRays from '../components/LightRays/LightRays';
 import ProfileCard from '../components/ProfileCard/ProfileCard';
 import './HomePage.css';
 
@@ -127,18 +128,61 @@ export default function HomePage() {
         </section>
       )}
       <section className="home-main" aria-hidden={introPhase !== 'done'}>
-        {introPhase === 'done' && activeDock === 'profile' && (
+        {introPhase === 'done' && activeDock === 'home' && (
           <div className="home-profile-stage">
-            <ProfileCard
-              avatarUrl="/images/senaa-profile.jpg"
-              miniAvatarUrl="/images/senaa-profile.jpg"
-              name="Senaa"
-              title="Software Engineer"
-              handle="senaa"
-              status="Tracing systems"
-              contactText="Contact"
-              onContactClick={() => selectDock('contact')}
-            />
+            <div className="home-portfolio-copy">
+              <LightRays
+                className="home-copy-rays"
+                raysOrigin="left"
+                raysColor="#6EEBFF"
+                raysSpeed={1}
+                lightSpread={1}
+                rayLength={2}
+                fadeDistance={1}
+                saturation={1}
+                followMouse
+                mouseInfluence={0.1}
+                noiseAmount={0}
+                distortion={0}
+                resolutionScale={0.48}
+                maxFrameRate={30}
+              />
+              <div className="home-portfolio-content">
+                <p className="home-portfolio-kicker">SENAARAVICHANDRAN A</p>
+                <h2>Engineering Tomorrow Before It Exists.</h2>
+                <p>I build AI systems, intelligent architectures, and technologies that transform ambitious ideas into reality.</p>
+                <p>
+                  From Generative AI and Quantum-inspired systems to Computer Vision and Autonomous Agents, my work lives at the
+                  intersection of curiosity, engineering, and innovation.
+                </p>
+                <p className="home-portfolio-meta">
+                  • 9× Hackathon Winner • AI Engineer • ML Innovater • Data Intelligence • Blockchain Tinkerer • Quantum Computing
+                  Visionary • Researcher • Builder
+                </p>
+                <button className="home-archive-btn" type="button" onClick={() => selectDock('work')}>
+                  ENTER THE ARCHIVE
+                </button>
+              </div>
+            </div>
+            <div className="home-card-pane">
+              <ProfileCard
+                avatarUrl="/images/senaa-profile.jpg"
+                miniAvatarUrl="/images/icon-home.jpg"
+                name="Senaaravichandran A"
+                title="AI Engineer"
+                handle="senaaravichandran"
+                status="Online"
+                contactText="Contact Me"
+                showUserInfo
+                enableTilt={true}
+                enableMobileTilt
+                behindGlowEnabled
+                iconUrl="/images/profile-iconpattern.svg"
+                grainUrl="/images/profile-grain.svg"
+                innerGradient="linear-gradient(145deg,#60496e8c 0%,#71C4FF44 100%)"
+                onContactClick={() => selectDock('contact')}
+              />
+            </div>
           </div>
         )}
         {introPhase === 'done' && <Dock items={dockItems} />}
