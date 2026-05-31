@@ -1,7 +1,8 @@
 .icon-btns {
   display: grid;
   grid-template-columns: repeat(5, minmax(58px, 1fr));
-  gap: clamp(18px, 2.2vw, 34px);
+  column-gap: clamp(18px, 2.2vw, 34px);
+  row-gap: clamp(34px, 5vh, 58px);
   width: 100%;
   max-width: 620px;
   overflow: visible;
@@ -102,7 +103,8 @@
 @media (max-width: 760px) {
   .icon-btns {
     grid-template-columns: repeat(5, minmax(42px, 1fr));
-    gap: 14px;
+    column-gap: 14px;
+    row-gap: 24px;
   }
 
   .icon-btn {

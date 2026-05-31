@@ -1,0 +1,83 @@
+.rainbow-button {
+  --rainbow-speed: 2.6s;
+  --rainbow-radius: 12px;
+
+  position: relative;
+  display: inline-flex;
+  width: fit-content;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  padding: 1px;
+  border: 0;
+  border-radius: var(--rainbow-radius);
+  color: rgba(245, 255, 255, 0.98);
+  background:
+    linear-gradient(#071218, #071218) padding-box,
+    conic-gradient(from var(--rainbow-angle), #6eebff, #66ffd1, #38bdf8, #c084fc, #f472b6, #6eebff) border-box;
+  box-shadow:
+    0 0 22px rgba(110, 235, 255, 0.16),
+    0 12px 32px rgba(0, 0, 0, 0.28);
+  cursor: pointer;
+  font: inherit;
+  overflow: hidden;
+  text-decoration: none;
+  animation: rainbowButtonSpin var(--rainbow-speed) linear infinite;
+}
+
+.rainbow-button::before {
+  position: absolute;
+  inset: -60%;
+  background: conic-gradient(from var(--rainbow-angle), transparent 0 28%, rgba(110, 235, 255, 0.32), transparent 52% 100%);
+  content: '';
+  opacity: 0;
+  transition: opacity 0.22s ease;
+}
+
+.rainbow-button:hover::before,
+.rainbow-button:focus-visible::before {
+  opacity: 1;
+}
+
+.rainbow-button:focus-visible {
+  outline: 2px solid rgba(235, 255, 255, 0.78);
+  outline-offset: 3px;
+}
+
+.rainbow-button:disabled,
+.rainbow-button.is-disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
+}
+
+.rainbow-button__content {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 19px;
+  border-radius: calc(var(--rainbow-radius) - 1px);
+  background:
+    radial-gradient(circle at 50% 0%, rgba(110, 235, 255, 0.14), transparent 70%),
+    rgba(7, 18, 24, 0.9);
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+@property --rainbow-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes rainbowButtonSpin {
+  to {
+    --rainbow-angle: 360deg;
+  }
+}

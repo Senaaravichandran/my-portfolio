@@ -4,9 +4,12 @@ import BorderGlow from '../components/BorderGlow/BorderGlow';
 import Dock from '../components/Dock/Dock';
 import GlassIcons from '../components/GlassIcons/GlassIcons';
 import LetterGlitch from '../components/LetterGlitch/LetterGlitch';
+import LineWaves from '../components/LineWaves/LineWaves';
 import LightRays from '../components/LightRays/LightRays';
 import PixelTransition from '../components/PixelTransition/PixelTransition';
 import ProfileCard from '../components/ProfileCard/ProfileCard';
+import RainbowButton from '../components/RainbowButton/RainbowButton';
+import StarBorder from '../components/StarBorder/StarBorder';
 import './HomePage.css';
 
 const INTRO_HOLD_MS = 3600;
@@ -97,17 +100,17 @@ const profileLinks = [
   },
   {
     id: 'soon',
-    label: 'Soon',
-    description: 'Unknown',
-    href: '',
+    label: 'DRAGORITHM',
+    description: 'Our team Dragorithm',
+    route: '/dragorithm',
     color: 'graphite',
-    logo: '/images/social/soon.png'
+    logo: '/images/social/dragorithm.png'
   }
 ];
 
 export default function HomePage() {
-  const [introPhase, setIntroPhase] = useState('active');
   const [activeDock, setActiveDock] = useState(() => window.location.hash.replace('#', '') || 'home');
+  const [introPhase, setIntroPhase] = useState(() => (window.location.hash.replace('#', '') === 'home' || !window.location.hash ? 'active' : 'done'));
   const [activeProfileLink, setActiveProfileLink] = useState(null);
   const wheelLockRef = useRef(false);
   const navigate = useNavigate();
@@ -207,6 +210,9 @@ export default function HomePage() {
   }, [activeDock, navigate, selectDock]);
 
   useEffect(() => {
+    const initialHash = window.location.hash.replace('#', '');
+    if (initialHash && initialHash !== 'home') return undefined;
+
     const exitTimer = setTimeout(() => {
       setIntroPhase('leaving');
     }, INTRO_HOLD_MS);
@@ -245,6 +251,23 @@ export default function HomePage() {
       <section className="home-main" aria-hidden={introPhase !== 'done'}>
         {introPhase === 'done' && activeDock === 'home' && (
           <div className="home-profile-stage">
+            <div className="home-line-waves" aria-hidden="true">
+              <LineWaves
+                speed={0.18}
+                innerLineCount={24}
+                outerLineCount={30}
+                warpIntensity={0.72}
+                rotation={-38}
+                edgeFadeWidth={0.28}
+                colorCycleSpeed={0.35}
+                brightness={0.075}
+                color1="#6EEBFF"
+                color2="#66FFD1"
+                color3="#38BDF8"
+                enableMouseInteraction={false}
+                mouseInfluence={0}
+              />
+            </div>
             <div className="home-portfolio-copy">
               <LightRays
                 className="home-copy-rays"
@@ -281,23 +304,26 @@ export default function HomePage() {
               </div>
             </div>
             <div className="home-card-pane">
-              <ProfileCard
-                avatarUrl="/images/senaa-profile.jpg"
-                miniAvatarUrl="/images/icon-home.jpg"
-                name="Senaaravichandran A"
-                title="AI Engineer"
-                handle="senaaravichandran"
-                status="Online"
-                contactText="Contact Me"
-                showUserInfo
-                enableTilt={true}
-                enableMobileTilt
-                behindGlowEnabled
-                iconUrl="/images/profile-iconpattern.svg"
-                grainUrl="/images/profile-grain.svg"
-                innerGradient="linear-gradient(145deg,#60496e8c 0%,#71C4FF44 100%)"
-                onContactClick={() => selectDock('contact')}
-              />
+              <StarBorder className="home-profile-star-border" color="white" speed="4.4s" thickness={3}>
+                <ProfileCard
+                  className="home-profile-reactbits-card"
+                  avatarUrl="/images/senaa-profile.jpg"
+                  miniAvatarUrl="/images/icon-home.jpg"
+                  name="Senaaravichandran A"
+                  title="AI Engineer"
+                  handle="senaaravichandran"
+                  status="Online"
+                  contactText="Contact Me"
+                  showUserInfo
+                  enableTilt={true}
+                  enableMobileTilt
+                  behindGlowEnabled
+                  iconUrl="/images/profile-iconpattern.svg"
+                  grainUrl="/images/profile-grain.svg"
+                  innerGradient="linear-gradient(145deg,#60496e8c 0%,#71C4FF44 100%)"
+                  onContactClick={() => selectDock('contact')}
+                />
+              </StarBorder>
             </div>
           </div>
         )}
@@ -308,46 +334,34 @@ export default function HomePage() {
                 className="profile-glass-icons"
                 items={profileLinks}
                 activeId={activeProfileLink?.id}
-                onSelect={setActiveProfileLink}
+                onSelect={item => setActiveProfileLink(current => (current?.id === item.id ? null : item))}
               />
               {activeProfileLink && (
                 <div className="profile-link-detail" aria-live="polite">
                   <span className="profile-link-detail__label">{activeProfileLink.label}</span>
                   <p>{activeProfileLink.description}</p>
-                  {activeProfileLink.href ? (
-                    <BorderGlow
-                      className="profile-visit-glow"
-                      edgeSensitivity={16}
-                      glowColor="190 100 74"
-                      backgroundColor="rgba(7, 18, 24, 0.78)"
-                      borderRadius={10}
-                      glowRadius={22}
-                      glowIntensity={0.78}
-                      coneSpread={28}
-                      colors={['#6EEBFF', '#66FFD1', '#38BDF8']}
-                      fillOpacity={0.2}
+                  {activeProfileLink.route ? (
+                    <RainbowButton
+                      className="profile-link-detail__visit"
+                      type="button"
+                      onClick={() => navigate(activeProfileLink.route)}
                     >
-                      <a className="profile-link-detail__visit" href={activeProfileLink.href} target="_blank" rel="noreferrer">
-                        Visit
-                      </a>
-                    </BorderGlow>
+                      Visit
+                    </RainbowButton>
+                  ) : activeProfileLink.href ? (
+                    <RainbowButton
+                      as="a"
+                      className="profile-link-detail__visit"
+                      href={activeProfileLink.href}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Visit
+                    </RainbowButton>
                   ) : (
-                    <BorderGlow
-                      className="profile-visit-glow is-disabled"
-                      edgeSensitivity={16}
-                      glowColor="190 100 74"
-                      backgroundColor="rgba(7, 18, 24, 0.42)"
-                      borderRadius={10}
-                      glowRadius={18}
-                      glowIntensity={0.45}
-                      coneSpread={28}
-                      colors={['#6EEBFF', '#66FFD1', '#38BDF8']}
-                      fillOpacity={0.1}
-                    >
-                      <button className="profile-link-detail__visit is-disabled" type="button" disabled>
-                        Visit
-                      </button>
-                    </BorderGlow>
+                    <RainbowButton className="profile-link-detail__visit is-disabled" type="button" disabled>
+                      Visit
+                    </RainbowButton>
                   )}
                 </div>
               )}
