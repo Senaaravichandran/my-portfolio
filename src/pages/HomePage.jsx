@@ -10,6 +10,8 @@ import PixelTransition from '../components/PixelTransition/PixelTransition';
 import ProfileCard from '../components/ProfileCard/ProfileCard';
 import RainbowButton from '../components/RainbowButton/RainbowButton';
 import StarBorder from '../components/StarBorder/StarBorder';
+import SpotlightCard from '../components/SpotlightCard/SpotlightCard';
+import Lanyard from '../components/Lanyard/Lanyard';
 import './HomePage.css';
 
 const INTRO_HOLD_MS = 3600;
@@ -403,6 +405,23 @@ export default function HomePage() {
                   aspectRatio="221.97%"
                 />
               </BorderGlow>
+            </div>
+          </section>
+        )}
+        {introPhase === 'done' && activeDock === 'work' && (
+          <section className="work-archive-stage" aria-label="Work archive">
+            <div className="work-column">
+              <SpotlightCard className="work-spotlight-card" spotlightColor="rgba(110, 235, 255, 0.24)">
+                <h2>Experience</h2>
+              </SpotlightCard>
+            </div>
+            <div className="work-column">
+              <SpotlightCard className="work-spotlight-card" spotlightColor="rgba(102, 255, 209, 0.2)">
+                <h2>Education</h2>
+              </SpotlightCard>
+            </div>
+            <div className="work-column work-lanyard-column">
+              <Lanyard position={[0, 0, 24]} gravity={[0, -40, 0]} />
             </div>
           </section>
         )}
