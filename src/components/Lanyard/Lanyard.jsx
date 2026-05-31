@@ -11,7 +11,7 @@ import './Lanyard.css';
 
 extend({ MeshLineGeometry, MeshLineMaterial });
 
-function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }) {
+function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false, showBack = false }) {
   const band = useRef();
   const fixed = useRef();
   const j1 = useRef();
@@ -34,17 +34,17 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }) {
   useRopeJoint(fixed, j1, [
     [0, 0, 0],
     [0, 0, 0],
-    1
+    2.25
   ]);
   useRopeJoint(j1, j2, [
     [0, 0, 0],
     [0, 0, 0],
-    1
+    2.25
   ]);
   useRopeJoint(j2, j3, [
     [0, 0, 0],
     [0, 0, 0],
-    1
+    2.25
   ]);
   useSphericalJoint(j3, card, [
     [0, 0, 0],
@@ -90,22 +90,22 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }) {
 
   return (
     <>
-      <group position={[0, 4, 0]}>
+      <group position={[0, 8.7, 0]}>
         <RigidBody ref={fixed} {...segmentProps} type="fixed" />
-        <RigidBody position={[0.5, 0, 0]} ref={j1} {...segmentProps}>
+        <RigidBody position={[0, -2.15, 0]} ref={j1} {...segmentProps}>
           <BallCollider args={[0.1]} />
         </RigidBody>
-        <RigidBody position={[1, 0, 0]} ref={j2} {...segmentProps}>
+        <RigidBody position={[0, -4.3, 0]} ref={j2} {...segmentProps}>
           <BallCollider args={[0.1]} />
         </RigidBody>
-        <RigidBody position={[1.5, 0, 0]} ref={j3} {...segmentProps}>
+        <RigidBody position={[0, -6.45, 0]} ref={j3} {...segmentProps}>
           <BallCollider args={[0.1]} />
         </RigidBody>
-        <RigidBody position={[2, 0, 0]} ref={card} {...segmentProps} type={dragged ? 'kinematicPosition' : 'dynamic'}>
+        <RigidBody position={[0, -7.78, 0]} ref={card} {...segmentProps} type={dragged ? 'kinematicPosition' : 'dynamic'}>
           <CuboidCollider args={[0.8, 1.125, 0.01]} />
           <group
-            scale={2.25}
-            position={[0, -1.2, -0.05]}
+            scale={4.05}
+            position={[0, -1.48, -0.05]}
             onPointerOver={() => hover(true)}
             onPointerOut={() => hover(false)}
             onPointerUp={event => {
@@ -117,31 +117,32 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }) {
               drag(new THREE.Vector3().copy(event.point).sub(vec.copy(card.current.translation())));
             }}
           >
-            <mesh geometry={nodes.card.geometry}>
-              <meshPhysicalMaterial
-                map={materials.base.map}
-                map-anisotropy={16}
-                clearcoat={isMobile ? 0 : 1}
-                clearcoatRoughness={0.15}
-                roughness={0.9}
-                metalness={0.8}
-              />
-            </mesh>
-            <mesh geometry={nodes.clip.geometry} material={materials.metal} material-roughness={0.3} />
-            <mesh geometry={nodes.clamp.geometry} material={materials.metal} />
+            <group rotation={[0, showBack ? Math.PI : 0, 0]}>
+              <mesh geometry={nodes.card.geometry}>
+                <meshPhysicalMaterial
+                  map={materials.base.map}
+                  map-anisotropy={16}
+                  clearcoat={isMobile ? 0 : 1}
+                  clearcoatRoughness={0.15}
+                  roughness={0.9}
+                  metalness={0.8}
+                />
+              </mesh>
+              <mesh geometry={nodes.clip.geometry} material={materials.metal} material-roughness={0.3} position={[0, 0.42, 0]} scale={[0.72, 0.48, 0.72]} />
+              <mesh geometry={nodes.clamp.geometry} material={materials.metal} position={[0, 0.42, 0]} scale={[0.72, 0.48, 0.72]} />
+            </group>
           </group>
         </RigidBody>
       </group>
-      <mesh ref={band}>
+      <mesh ref={band} renderOrder={-1}>
         <meshLineGeometry />
         <meshLineMaterial
-          color="white"
-          depthTest={false}
+          color="#9b5cff"
+          depthTest
+          depthWrite={false}
           resolution={isMobile ? [1000, 2000] : [1000, 1000]}
-          useMap
-          map={texture}
           repeat={[-4, 1]}
-          lineWidth={1}
+          lineWidth={1.15}
         />
       </mesh>
     </>
@@ -150,6 +151,7 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }) {
 
 export default function Lanyard({ position = [0, 0, 30], gravity = [0, -40, 0], fov = 20, transparent = true }) {
   const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth < 768);
+  const [showBack, setShowBack] = useState(false);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
@@ -159,6 +161,9 @@ export default function Lanyard({ position = [0, 0, 30], gravity = [0, -40, 0], 
 
   return (
     <div className="lanyard-wrapper">
+      <button className="lanyard-flip-button" type="button" onClick={() => setShowBack(current => !current)}>
+        Backside
+      </button>
       <Canvas
         camera={{ position, fov }}
         dpr={[1, isMobile ? 1.5 : 2]}
@@ -167,7 +172,7 @@ export default function Lanyard({ position = [0, 0, 30], gravity = [0, -40, 0], 
       >
         <ambientLight intensity={Math.PI} />
         <Physics gravity={gravity} timeStep={isMobile ? 1 / 30 : 1 / 60}>
-          <Band isMobile={isMobile} />
+          <Band isMobile={isMobile} showBack={showBack} />
         </Physics>
         <Environment blur={0.75}>
           <Lightformer intensity={2} color="white" position={[0, -1, 5]} rotation={[0, 0, Math.PI / 3]} scale={[100, 0.1, 1]} />

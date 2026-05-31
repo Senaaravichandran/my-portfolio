@@ -421,7 +421,7 @@ export default function HomePage() {
               </SpotlightCard>
             </div>
             <div className="work-column work-lanyard-column">
-              <Lanyard position={[0, 0, 24]} gravity={[0, -40, 0]} />
+              <Lanyard position={[0, 0, 22]} gravity={[0, -40, 0]} fov={18} />
             </div>
           </section>
         )}

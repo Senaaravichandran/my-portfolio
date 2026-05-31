@@ -435,7 +435,8 @@
 }
 
 .work-lanyard-column {
-  height: min(68vh, 560px);
+  height: calc(100vh - 112px);
+  align-self: stretch;
   overflow: visible;
 }
 
