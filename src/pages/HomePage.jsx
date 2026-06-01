@@ -14,6 +14,7 @@ import SpotlightCard from '../components/SpotlightCard/SpotlightCard';
 import Lanyard from '../components/Lanyard/Lanyard';
 import SplashCursor from '../components/SplashCursor/SplashCursor';
 import Magnet from '../components/Magnet/Magnet';
+import Orb from '../components/Orb/Orb';
 import './HomePage.css';
 
 const INTRO_HOLD_MS = 3600;
@@ -83,7 +84,7 @@ const profileLinks = [
     label: 'Medium',
     description: 'Documenting curiosity, innovation, research, and the experiences that fuel my growth',
     href: 'https://medium.com/@senaaravichandran',
-    color: 'graphite',
+    color: 'grey',
     logo: '/images/social/medium.png'
   },
   {
@@ -99,7 +100,7 @@ const profileLinks = [
     label: 'Clash of Clans',
     description: 'Learning resource management, long-term planning, and strategic execution through Clash of Clans',
     href: 'https://link.clashofclans.com/en?action=OpenPlayerProfile&tag=%23PCQYQUG9V',
-    color: 'red',
+    color: 'yellow',
     logo: '/images/social/clash-of-clans.png'
   },
   {
@@ -107,7 +108,7 @@ const profileLinks = [
     label: 'DRAGORITHM',
     description: 'Our team Dragorithm',
     route: '/dragorithm',
-    color: 'graphite',
+    color: 'red',
     logo: '/images/social/dragorithm.png'
   }
 ];
@@ -333,6 +334,12 @@ export default function HomePage() {
         )}
         {introPhase === 'done' && activeDock === 'profile' && (
           <section className="profile-archive-stage" aria-label="Profile archive">
+            <div className="profile-work-orb">
+              <Orb hue={0} hoverIntensity={2} rotateOnHover forceHoverState={false} backgroundColor="#000000" />
+              <button className="profile-see-work-btn" type="button" onClick={() => selectDock('work')}>
+                See my work
+              </button>
+            </div>
             <div className="profile-links-showcase">
               <GlassIcons
                 className="profile-glass-icons"
@@ -374,15 +381,15 @@ export default function HomePage() {
               <BorderGlow
                 className="profile-border-glow"
                 edgeSensitivity={30}
-                glowColor="190 100 74"
+                glowColor="28 100 64"
                 backgroundColor="#02070a"
                 borderRadius={24}
-                glowRadius={36}
-                glowIntensity={0.92}
+                glowRadius={28}
+                glowIntensity={0.78}
                 coneSpread={25}
                 loop
-                colors={['#6EEBFF', '#66FFD1', '#38BDF8']}
-                fillOpacity={0.22}
+                colors={['#FFB454', '#FF6A3D', '#F6C35B']}
+                fillOpacity={0.14}
               >
                 <PixelTransition
                   className="profile-pixel-card"
@@ -402,7 +409,7 @@ export default function HomePage() {
                     </div>
                   }
                   gridSize={14}
-                  pixelColor="#6EEBFF"
+                  pixelColor="#F6A13A"
                   animationStepDuration={0.42}
                   aspectRatio="221.97%"
                 />
