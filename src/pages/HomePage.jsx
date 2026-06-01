@@ -34,7 +34,8 @@ const profileLinks = [
   {
     id: 'location',
     label: 'Puducherry, India',
-    description: 'From French Streets to Future Technologies',
+    description:
+      "From French Streets to Future Technologies, I've spent my time chasing ideas that travel far beyond city limits.\n\nSomewhere between curiosity and code, I found my passion for building things that didn't exist yesterday.",
     href: 'https://www.google.com/maps/place/Puducherry',
     color: 'cyan',
     logo: '/images/social/location.png'
@@ -42,7 +43,8 @@ const profileLinks = [
   {
     id: 'contact',
     label: '+91 7418887124',
-    description: 'Reach Me Across Calls, WhatsApp, Telegram & More',
+    description:
+      'Over the years, this number has carried countless conversations, opportunities, and lessons.\n\nMaybe the next one will be with you.',
     href: 'https://wa.me/917418887124',
     color: 'green',
     logo: '/images/social/phone.png'
@@ -50,7 +52,7 @@ const profileLinks = [
   {
     id: 'mail',
     label: 'Mail',
-    description: "Let's connect, collaborate, and build something impactful together",
+    description: 'For questions, opportunities, wild ideas, and everything in between, Perhaps the next chapter starts here.',
     href: 'mailto:senaaravichandran@gmail.com',
     color: 'blue',
     logo: '/images/social/Gmail.png'
@@ -58,7 +60,8 @@ const profileLinks = [
   {
     id: 'linkedin',
     label: 'LinkedIn',
-    description: 'Connect with my professional journey, achievements, and industry network',
+    description:
+      'Connect with my professional journey, achievements, and industry network.\n\nA few years ago, I knew almost nobody in tech.\nToday, I learn from builders, researchers, founders, and engineers across the world every day.',
     href: 'https://www.linkedin.com/in/senaa2407',
     color: 'indigo',
     logo: '/images/social/linkedin.png'
@@ -66,7 +69,8 @@ const profileLinks = [
   {
     id: 'github',
     label: 'GitHub',
-    description: 'The blueprint behind my engineering journey',
+    description:
+      'The blueprint behind my engineering journey.\n\nMost repositories begin with a question, an idea, or a problem that refuses to leave my mind.\nSome became projects, others became lessons, but each one taught me something worth carrying forward.',
     href: 'https://github.com/Senaaravichandran',
     color: 'graphite',
     logo: '/images/social/github.png'
@@ -74,7 +78,8 @@ const profileLinks = [
   {
     id: 'leetcode',
     label: 'LeetCode',
-    description: 'Practicing the art of problem-solving through code',
+    description:
+      "Practicing the art of problem-solving through code.\n\nI've learned that the first solution is rarely the best one.\nLeetCode taught me that patience, persistence, and the way you think often matter more than the answer itself.",
     href: 'https://leetcode.com/u/Senaaravichandran/',
     color: 'orange',
     logo: '/images/social/leetcode.png'
@@ -82,7 +87,8 @@ const profileLinks = [
   {
     id: 'medium',
     label: 'Medium',
-    description: 'Documenting curiosity, innovation, research, and the experiences that fuel my growth',
+    description:
+      "Documenting curiosity, innovation, research, and the experiences that fuel my growth.\n\nI write about what I'm building, what I'm learning, and the ideas, experiences, and moments that leave a lasting impression on me.",
     href: 'https://medium.com/@senaaravichandran',
     color: 'grey',
     logo: '/images/social/medium.png'
@@ -90,7 +96,8 @@ const profileLinks = [
   {
     id: 'chess',
     label: 'Chess.com',
-    description: 'Shaping the way I approach problems, decisions, and uncertainty through chess',
+    description:
+      'Shaping the way I approach problems, decisions, and uncertainty through chess.\n\nStarting at the age of 11, years of tournaments, victories, and state-level competition taught me that patience, strategic thinking, and staying calm under pressure often matter more than the outcome itself.',
     href: 'https://www.chess.com/member/Senaa2407',
     color: 'purple',
     logo: '/images/social/chess.png'
@@ -98,7 +105,8 @@ const profileLinks = [
   {
     id: 'clash',
     label: 'Clash of Clans',
-    description: 'Learning resource management, long-term planning, and strategic execution through Clash of Clans',
+    description:
+      'Learning resource management, long-term planning, and strategic execution through Clash of Clans.\n\nSince 2018, Clash of Clans has quietly taught me patience, strategic thinking, resource management, and the value of consistent progress over time.',
     href: 'https://link.clashofclans.com/en?action=OpenPlayerProfile&tag=%23PCQYQUG9V',
     color: 'yellow',
     logo: '/images/social/clash-of-clans.png'
@@ -106,7 +114,8 @@ const profileLinks = [
   {
     id: 'soon',
     label: 'DRAGORITHM',
-    description: 'Our team Dragorithm',
+    description:
+      "More than a team, it's a story of how a few curious minds came together to build, compete, and grow.\n\nVisit to discover how Dragorithm was formed, the meaning behind its name, and the journey we're creating together.",
     route: '/dragorithm',
     color: 'red',
     logo: '/images/social/dragorithm.png'
@@ -450,7 +459,7 @@ export default function HomePage() {
             </div>
           </section>
         )}
-        {introPhase === 'done' && <Dock items={dockItems} />}
+        {introPhase === 'done' && <Dock items={dockItems} className={activeDock === 'profile' ? 'dock-profile-red' : ''} />}
       </section>
     </main>
   );
