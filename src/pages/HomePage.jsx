@@ -12,6 +12,8 @@ import RainbowButton from '../components/RainbowButton/RainbowButton';
 import StarBorder from '../components/StarBorder/StarBorder';
 import SpotlightCard from '../components/SpotlightCard/SpotlightCard';
 import Lanyard from '../components/Lanyard/Lanyard';
+import SplashCursor from '../components/SplashCursor/SplashCursor';
+import Magnet from '../components/Magnet/Magnet';
 import './HomePage.css';
 
 const INTRO_HOLD_MS = 3600;
@@ -410,15 +412,31 @@ export default function HomePage() {
         )}
         {introPhase === 'done' && activeDock === 'work' && (
           <section className="work-archive-stage" aria-label="Work archive">
+            <SplashCursor
+              DENSITY_DISSIPATION={3.5}
+              VELOCITY_DISSIPATION={2}
+              PRESSURE={0.1}
+              CURL={3}
+              SPLAT_RADIUS={0.2}
+              SPLAT_FORCE={6000}
+              COLOR_UPDATE_SPEED={10}
+              SHADING
+              RAINBOW_MODE={false}
+              COLOR="#A855F7"
+            />
             <div className="work-column">
-              <SpotlightCard className="work-spotlight-card" spotlightColor="rgba(110, 235, 255, 0.24)">
-                <h2>Experience</h2>
-              </SpotlightCard>
+              <Magnet wrapperClassName="work-card-magnet" padding={140} disabled={false} magnetStrength={12} activeTransition="transform 0.18s ease-out">
+                <SpotlightCard className="work-spotlight-card" spotlightColor="rgba(110, 235, 255, 0.24)">
+                  <h2>Experience</h2>
+                </SpotlightCard>
+              </Magnet>
             </div>
             <div className="work-column">
-              <SpotlightCard className="work-spotlight-card" spotlightColor="rgba(102, 255, 209, 0.2)">
-                <h2>Education</h2>
-              </SpotlightCard>
+              <Magnet wrapperClassName="work-card-magnet" padding={140} disabled={false} magnetStrength={12} activeTransition="transform 0.18s ease-out">
+                <SpotlightCard className="work-spotlight-card" spotlightColor="rgba(102, 255, 209, 0.2)">
+                  <h2>Education</h2>
+                </SpotlightCard>
+              </Magnet>
             </div>
             <div className="work-column work-lanyard-column">
               <Lanyard position={[0, 0, 22]} gravity={[0, -40, 0]} fov={18} />
