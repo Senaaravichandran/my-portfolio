@@ -304,9 +304,9 @@
   box-sizing: border-box;
   isolation: isolate;
   background:
-    radial-gradient(circle at 76% 48%, rgba(110, 235, 255, 0.11), transparent 35%),
-    radial-gradient(circle at 20% 32%, rgba(69, 167, 255, 0.14), transparent 34%),
-    linear-gradient(90deg, rgba(7, 27, 34, 0.98), #000 72%);
+    radial-gradient(circle at 76% 48%, rgba(255, 92, 58, 0.08), transparent 35%),
+    radial-gradient(circle at 20% 34%, rgba(255, 112, 56, 0.12), transparent 34%),
+    linear-gradient(90deg, rgba(30, 12, 10, 0.96), rgba(8, 4, 4, 0.98) 58%, #000 76%);
   animation: homeSectionIn 0.55s ease-out both;
 }
 
@@ -315,8 +315,8 @@
   inset: 0;
   z-index: 0;
   background:
-    linear-gradient(115deg, transparent 0%, rgba(110, 235, 255, 0.08) 22%, transparent 42%),
-    radial-gradient(ellipse at 78% 50%, rgba(110, 235, 255, 0.12), transparent 42%);
+    linear-gradient(115deg, transparent 0%, rgba(255, 98, 55, 0.06) 22%, transparent 42%),
+    radial-gradient(ellipse at 78% 50%, rgba(255, 128, 64, 0.08), transparent 42%);
   content: '';
   mix-blend-mode: screen;
   pointer-events: none;
@@ -335,7 +335,7 @@
 
 .profile-glass-icons {
   justify-self: center;
-  row-gap: clamp(62px, 8vh, 92px);
+  row-gap: clamp(43px, 5.8vh, 68px);
 }
 
 .profile-link-detail {
@@ -347,14 +347,14 @@
   min-height: 150px;
   align-content: center;
   gap: 14px;
-  margin-top: 24px;
+  margin-top: 2px;
   margin-left: 160px;
   padding: 18px 26px;
   border: 1px solid rgba(226, 250, 255, 0.2);
   border-radius: 20px;
   background:
-    radial-gradient(circle at 20% 0%, rgba(110, 235, 255, 0.15), transparent 58%),
-    rgba(5, 16, 20, 0.58);
+    radial-gradient(circle at 20% 0%, rgba(255, 110, 58, 0.12), transparent 58%),
+    rgba(18, 9, 8, 0.6);
   box-shadow:
     0 22px 70px rgba(0, 0, 0, 0.36),
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
@@ -391,7 +391,7 @@
 
 .profile-work-orb {
   position: absolute;
-  left: clamp(-42px, 0.6vw, 12px);
+  left: clamp(-66px, -0.8vw, -12px);
   bottom: clamp(16px, 4vh, 52px);
   z-index: 1;
   width: clamp(220px, 22vw, 330px);
